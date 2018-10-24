@@ -5,7 +5,127 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="@drawable/mainbackground"
     tools:context="com.example.shereen.dipolmafinalproject.SignUp">
+
+
+    <TextView
+        android:id="@+id/signuptext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="30dp"
+        android:gravity="left"
+        android:layout_margin="30dp"
+        android:text="SignUp."
+        android:textColor="@color/black"
+        android:textSize="60dp"
+
+
+        />
+
+
+
+
+
+
+
+    <EditText
+        android:id="@+id/signname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edittext"
+        android:hint=" Name"
+        android:textColorHint="@color/black"
+        android:gravity="left"
+        android:padding="10dp"
+        android:layout_marginBottom="30dp"
+
+        />
+
+
+    <EditText
+        android:id="@+id/signemail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edittext"
+        android:padding="10dp"
+        android:hint="Email"
+        android:textColorHint="@color/black"
+        android:gravity="left"
+
+        />
+
+    <EditText
+        android:id="@+id/signphone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edittext"
+        android:gravity="left"
+        android:hint="Phone"
+        android:inputType="numberPassword"
+        android:padding="10dp"
+        android:textColorHint="@color/black"
+
+
+        />
+
+    <EditText
+        android:id="@+id/signpassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edittext"
+        android:gravity="left"
+        android:hint="password"
+        android:inputType="numberPassword"
+        android:padding="10dp"
+        android:textColorHint="@color/black"
+
+
+        />
+
+    <EditText
+        android:id="@+id/signlocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edittext"
+        android:hint="Address"
+        android:textColorHint="@color/black"
+        android:gravity="left"
+        android:padding="10dp"
+        android:layout_marginBottom="40dp"
+
+        />
+
+    <Button
+        android:id="@+id/registerbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn"
+        android:text="Register"
+        android:textColor="@color/white"
+
+
+        />
 
 
 </LinearLayout>
