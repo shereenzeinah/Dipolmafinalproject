@@ -1,18 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+    android:background="@drawable/mainbackground"
     tools:context="com.example.shereen.dipolmafinalproject.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:text="Rent"
+        android:textColor="@color/black"
+        android:textSize="70dp" />
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="your 24h online store"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+
+        android:gravity="center"
+
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="9"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:weightSum="2">
+
+
+
+        <Button
+            android:id="@+id/mainregister"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/btn"
+            android:text="Register"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+
+
+            />
+
+        <Button
+            android:id="@+id/mainLogin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/btn"
+            android:text="Login"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/logingreen"
+            android:layout_weight="1"
+
+
+
+            />
+    </LinearLayout>
+</LinearLayout>
