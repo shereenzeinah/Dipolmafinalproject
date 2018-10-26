@@ -1,6 +1,6 @@
 package com.example.shereen.dipolmafinalproject;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,15 +17,21 @@ import java.util.ArrayList;
 public class RecycleViewAdapter extends RecyclerView.Adapter <RecycleViewAdapter.RecyclerViewHolder>{
 
     ArrayList<Product> product_list = new ArrayList<>();
-    Activity Homeactivity ;
-    public RecycleViewAdapter() {
 
+    private LayoutInflater mInflater;
+    public ItemClickListener mClickListener;
+
+    public RecycleViewAdapter(ArrayList<Product> product_list , Context context) {
+
+
+        this.mInflater = LayoutInflater.from(context);
+        this.product_list = product_list;
 
     }
 
     @Override
     public RecycleViewAdapter.RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_row , parent , false);
+        View row = mInflater.inflate(R.layout.recyclerview_row, parent, false);
         RecyclerViewHolder holder =new RecyclerViewHolder(row);
         return holder;
     }
@@ -33,15 +39,21 @@ public class RecycleViewAdapter extends RecyclerView.Adapter <RecycleViewAdapter
     @Override
     public void onBindViewHolder(RecycleViewAdapter.RecyclerViewHolder holder, int position) {
 
+        holder.name.setText(product_list.get(position).name);
+        holder.price.setText( String.valueOf(product_list.get(position).price));
+        //holder.image.setImageResource(product_list.get(position).book_image);
+
+
+
     }
 
 
 
     @Override
     public int getItemCount() {
-        return 0;
+        return product_list.size();
     }
-    public class RecyclerViewHolder extends RecyclerView.ViewHolder{
+    public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView name , price ;
         ImageView image ;
@@ -51,9 +63,25 @@ public class RecycleViewAdapter extends RecyclerView.Adapter <RecycleViewAdapter
             name=(TextView)itemView.findViewById(R.id.productname);
             price= (TextView) itemView.findViewById(R.id.price);
             image=(ImageView) itemView.findViewById(R.id.productimage);
+            itemView.setOnClickListener(this);
 
         }
 
 
+        @Override
+        public void onClick(View v) {
+            if (mClickListener != null) mClickListener.onItemClick(v, getAdapterPosition());
+        }
+    }
+    Product getItem(int id) {
+        return product_list.get(id);
+    }
+    void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
     }
 }
