@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="2"
+
     tools:context="com.example.shereen.dipolmafinalproject.ProductsFragment">
 
     <!-- TODO: Update blank fragment layout -->
