@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1"
-    android:background="@drawable/mainbackground"
     tools:context="com.example.shereen.dipolmafinalproject.SignUp">
 
 
@@ -22,16 +21,7 @@
         android:text="SignUp."
         android:textColor="@color/black"
         android:textSize="60dp"
-
-
         />
-
-
-
-
-
-
-
     <EditText
         android:id="@+id/signname"
         android:layout_width="match_parent"
@@ -39,7 +29,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edittext"
-        android:hint=" Name"
+        android:hint=" Username"
         android:textColorHint="@color/black"
         android:gravity="left"
         android:padding="10dp"
@@ -73,7 +63,6 @@
         android:background="@drawable/edittext"
         android:gravity="left"
         android:hint="Phone"
-        android:inputType="numberPassword"
         android:padding="10dp"
         android:textColorHint="@color/black"
 

@@ -33,6 +33,7 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
     final String product_avail= "pr_avail";
     final String product_contact= "pr_contact";
     final String product_id= "pr_id";
+    final public static String imagepath_key ="imagepath";
 
 
     public sqlLiteHelper(Context context) {
@@ -41,15 +42,15 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql_users= " CREATE TABLE " + Table_Name1 + " ( " + name_key +" VARCHAR ," +phone_key+ " INTEGER ," +email_key+ " VARCHAR ," +lat_key+ " DOUBLE ,"+ lng_key + " DOUBLE ," +
-                password_key + "VARCHAR )";
-        String sql_products= " CREATE TABLE " + Table_Name2 + " ( " + product_name +" VARCHAR ," +product_lat+ " DOUBLE ,"+ product_lng + " DOUBLE ," +product_price+ " INTEGER ," +product_days+ " INTEGER ," +
-                product_avail + "INTEGER ,"+ product_contact+" VARCHAR ,"+product_id+" INTEGER )";
+        String sql_users= " CREATE TABLE " + Table_Name1 + " ( " + name_key +" VARCHAR ," +
+                phone_key+ " INTEGER ," +email_key+ " VARCHAR PRIMARY KEY," +lat_key+ " DOUBLE ,"+ lng_key + " DOUBLE ," +
+                password_key + " VARCHAR )";
+        String sql_products= " CREATE TABLE " + Table_Name2 + " ( " + product_name +" VARCHAR ," +
+                product_lat+ " DOUBLE ,"+ product_lng + " DOUBLE ," +product_price+ " INTEGER ," +product_days+ " INTEGER ," +
+                product_avail + " INTEGER ,"+ product_contact+" VARCHAR ,"+product_id+" INTEGER PRIMARY KEY ,"+imagepath_key+" BLOB )";
 
         db.execSQL(sql_users);
         db.execSQL(sql_products);
-
-
     }
 
     @Override
@@ -97,7 +98,7 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
     public void delete_product(Product product)
     {
         SQLiteDatabase db= this.getWritableDatabase();
-        db.delete(Table_Name2, product_id+"="+product.id, null);
+        db.delete(Table_Name2, product_id+" = "+product.id, null);
     }
 
 
@@ -114,7 +115,8 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
         values.put(product_avail,product.avail);
         values.put(product_contact,product.contact_name);
         values.put(product_id,product.id);
-        db.update(Table_Name2, values, product_id+"="+product.id, null);
+        values.put(imagepath_key,product.image);
+        db.update(Table_Name2, values, product_id+" = "+product.id, null);
     }
 
     //Function to edit user
@@ -145,8 +147,8 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
             do
             {   String name=cursor.getString(0);
                 int phone=Integer.parseInt(cursor.getString(1));
-                double lat=Double.parseDouble(cursor.getString(2));
-                double lng=Double.parseDouble(cursor.getString(3));
+                double lat=cursor.getDouble(2);
+                double lng=cursor.getDouble(3);
                 String email=cursor.getString(4);
                 String password=cursor.getString(5);
                 if(user_email.equals(email))
@@ -178,11 +180,12 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
                 int avail=Integer.parseInt(cursor.getString(5));
                 String contact_name=cursor.getString(6);
                 int id=Integer.parseInt(cursor.getString(7));
+                byte [] image = cursor.getBlob(8);
 
 
                 if(product_id==id)
                 {
-                    found_product = new Product(pr_name,lat,lng,price,days,avail,contact_name,id);
+                    found_product = new Product(pr_name,lat,lng,price,days,avail,contact_name,id,image);
                 }
 
             }
@@ -202,8 +205,8 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
             do
             {   String name=cursor.getString(0);
                 int phone=Integer.parseInt(cursor.getString(1));
-                double lat=Double.parseDouble(cursor.getString(2));
-                double lng=Double.parseDouble(cursor.getString(3));
+                double lat=cursor.getDouble(2);
+                double lng=cursor.getDouble(3);
                 String email=cursor.getString(4);
                 String password=cursor.getString(5);
                 list.add( new User(name,phone,lat,lng,email,password));
@@ -232,8 +235,10 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
                 int avail=Integer.parseInt(cursor.getString(5));
                 String contact_name=cursor.getString(6);
                 int id=Integer.parseInt(cursor.getString(7));
+                byte [] image = cursor.getBlob(8);
 
-                list.add( new Product(pr_name,lat,lng,price,days,avail,contact_name,id));
+
+                list.add( new Product(pr_name,lat,lng,price,days,avail,contact_name,id,image));
             }
 
             while (cursor.moveToNext());

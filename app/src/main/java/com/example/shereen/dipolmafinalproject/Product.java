@@ -8,8 +8,9 @@ public class Product {
     String name,contact_name;
     double lat,lng;
     int days,price,avail,id;
+    public byte[] image;
 
-    public Product(String name,double lat,double lng, int price, int days, int avail, String contact_name, int id) {
+    public Product(String name,double lat,double lng, int price, int days, int avail, String contact_name, int id, byte[] image) {
         this.name = name;
         this.lat=lat;
         this.lng=lng;
@@ -18,6 +19,7 @@ public class Product {
         this.avail = avail;
         this.contact_name = contact_name;
         this.id=id;
+        this.image=image;
 
     }
 }

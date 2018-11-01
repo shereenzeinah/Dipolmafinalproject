@@ -1,14 +1,134 @@
 package com.example.shereen.dipolmafinalproject;
-
+import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
+    SharedPreferences sharedPreferences;
+    String sharedPrefName = "Login";
+    static String TAG="TEST";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Button signin = (Button) findViewById(R.id.loginbutton);
+        getSharedPreference();
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: here");
+                EditText editText_name = (EditText) findViewById(R.id.loginemail);
+                EditText editText_password = (EditText) findViewById(R.id.loginpassword);
+                String name = editText_name.getText().toString();
+                String password = editText_password.getText().toString();
+                login(name,password);
+            }
+        });
     }
 
+    public void login(String name, String password) {
+        sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(LoginActivity.this);
+        ArrayList<User> users = sqlLiteHelper.get_Users_Data();
+        Log.d(TAG, "login: here"+users.size());
+        for (int i = 0; i < users.size(); i++)
+        {
+            Log.d(TAG, "login: "+users.get(i).name);
+            if (users.get(i).name.equals(name)) {
+                Log.d(TAG, "login: here" +name);
+                if (users.get(i).password.equals(password)) {
+                    Toast.makeText(LoginActivity.this, "Signed in", Toast.LENGTH_LONG).show();
+                    sharedPreferences = getSharedPreferences(sharedPrefName, MODE_PRIVATE);
+                    int check = sharedPreferences.getInt("check", 0);
+                    if (check == 0) {
+                        save_username_password();
+                    } else {
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        this.finish();
+                    }
+                }
+            }
+        }
+    }
+
+    public void save_username_password() {
+        final Dialog dialog = new Dialog(LoginActivity.this);
+        dialog.setContentView(R.layout.activity_dialoug);
+        TextView dialoug_title = (TextView) dialog.findViewById(R.id.title1);
+        dialoug_title.setText("Save");
+        TextView content = (TextView) dialog.findViewById(R.id.content);
+        content.setText("Do you want to save your username and password?");
+        Button dialogButton = (Button) dialog.findViewById(R.id.positive_button);
+        Button no = (Button) dialog.findViewById(R.id.negative_button);
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LoginActivity.this, "Password and username not saved", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+        // if button is clicked, close the custom dialog
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LoginActivity.this, "Password and username saved", Toast.LENGTH_SHORT).show();
+                addSharedPreference();
+                dialog.dismiss();
+                sharedPreferences = getSharedPreferences(sharedPrefName, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("check", 1);
+                editor.commit();
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(intent);
+
+            }
+
+        });
+        dialog.show();
+    }
+
+    public void getSharedPreference()
+    {
+        sharedPreferences = getSharedPreferences(sharedPrefName,MODE_PRIVATE);
+        String name = sharedPreferences.getString("name", "");
+        String password = sharedPreferences.getString("password" , "");
+
+        EditText editText_name = (EditText) findViewById(R.id.loginemail);
+        EditText editText_password = (EditText) findViewById(R.id.loginpassword);
+        editText_name.setText(name);
+        editText_password.setText(password);
+        // Intent intent = new Intent(LoginActivity.this,home_page.class);
+        // startActivity(intent);
+        login(name,password);
+    }
+
+    public void addSharedPreference()
+    {
+        EditText name = (EditText) findViewById(R.id.loginemail);
+        String user_name = name.getText().toString();
+        EditText password = (EditText) findViewById(R.id.loginpassword);
+        String user_password = password.getText().toString();
+        sharedPreferences = getSharedPreferences(sharedPrefName,MODE_PRIVATE);
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+
+        editor.putString("name" , user_name);
+        editor.putString("password" , user_password);
+
+        editor.commit();
+
+
+    }
 }
