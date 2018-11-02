@@ -8,11 +8,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -91,6 +93,7 @@ public class ProductDetailsFragment extends Fragment {
         TextView ownermail = (TextView) v.findViewById(R.id.pd_ownwermail);
         TextView location = (TextView) v.findViewById(R.id.pd_productlocation);
         Button avaialable = (Button) v.findViewById(R.id.available);
+        final Button rent = (Button) v.findViewById(R.id.rent);
         EditText from = (EditText) v.findViewById(R.id.edittext_from);
         EditText to = (EditText) v.findViewById(R.id.edittext_to);
 
@@ -122,7 +125,28 @@ public class ProductDetailsFragment extends Fragment {
             avaialable.setBackgroundColor(avaialable.getContext().getResources().getColor(R.color.red));
         }
 
+        // pop up menu appear
 
+           rent.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   //Creating the instance of PopupMenu
+                   PopupMenu popup = new PopupMenu(getActivity(), rent);
+                   //Inflating the Popup using xml file
+                   popup.getMenuInflater()
+                           .inflate(R.menu.rent_days, popup.getMenu());
+
+                   //registering popup with OnMenuItemClickListener
+
+                   popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                       @Override
+                       public boolean onMenuItemClick(MenuItem item) {
+                           return false;
+                       }
+                   });
+                   popup.show();
+               }
+           });
 
 
 

@@ -11,5 +11,6 @@
     <color name="orange">#ff4500</color>
     <color name="logingreen">#13d57e</color>
     <color name="red">#ff4022</color>
+    <color name="transparent">#00ff0000</color>
 
 </resources>

@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by lenovo on 10/24/2018.
  */
 
-public class RecycleViewAdapter extends RecyclerView.Adapter <RecycleViewAdapter.RecyclerViewHolder>{
+public class RecycleViewAdapter extends RecyclerView.Adapter <RecycleViewAdapter.RecyclerViewHolder >{
 
     ArrayList<Product> product_list = new ArrayList<>();
 
