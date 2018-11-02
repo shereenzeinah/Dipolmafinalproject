@@ -1,6 +1,8 @@
 package com.example.shereen.dipolmafinalproject;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,9 +41,11 @@ public class RecycleViewAdapter extends RecyclerView.Adapter <RecycleViewAdapter
     @Override
     public void onBindViewHolder(RecycleViewAdapter.RecyclerViewHolder holder, int position) {
 
+        Bitmap bmp = BitmapFactory.decodeByteArray(product_list.get(position).image, 0, product_list.get(position).image.length);
+
         holder.name.setText(product_list.get(position).name);
         holder.price.setText( String.valueOf(product_list.get(position).price));
-        //holder.image.setImageResource(product_list.get(position).book_image);
+        holder.image.setImageBitmap(bmp);
 
 
 
@@ -56,7 +60,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter <RecycleViewAdapter
     public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView name , price ;
-        ImageView image ;
+       public ImageView image ;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);

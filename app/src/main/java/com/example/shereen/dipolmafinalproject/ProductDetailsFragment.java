@@ -1,12 +1,21 @@
 package com.example.shereen.dipolmafinalproject;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 /**
@@ -26,11 +35,17 @@ public class ProductDetailsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+   public ArrayList<Product> product_list_details_page ;
     private OnFragmentInteractionListener mListener;
 
     public ProductDetailsFragment() {
+
+    }
+
+    @SuppressLint("ValidFragment")
+    public ProductDetailsFragment(ArrayList<Product> products) {
         // Required empty public constructor
+        this.product_list_details_page=products;
     }
 
     /**
@@ -65,7 +80,53 @@ public class ProductDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =inflater.inflate(R.layout.fragment_product_details, container, false);
-      int position=getArguments().getInt("position");
+        int position=getArguments().getInt("position");
+        ImageView productimage = (ImageView) v.findViewById(R.id.product_detail_image);
+        TextView productname = (TextView) v.findViewById(R.id.pd_productname);
+        TextView productprice = (TextView) v.findViewById(R.id.pd_price);
+        TextView secondprice = (TextView) v.findViewById(R.id.pd_productprice);
+        TextView rentdays = (TextView) v.findViewById(R.id.pd_rentdays);
+        TextView ownwername = (TextView) v.findViewById(R.id.pd_ownername);
+        TextView ownwerphone = (TextView) v.findViewById(R.id.pd_ownerpphone);
+        TextView ownermail = (TextView) v.findViewById(R.id.pd_ownwermail);
+        TextView location = (TextView) v.findViewById(R.id.pd_productlocation);
+        Button avaialable = (Button) v.findViewById(R.id.available);
+        EditText from = (EditText) v.findViewById(R.id.edittext_from);
+        EditText to = (EditText) v.findViewById(R.id.edittext_to);
+
+        // set product information in product details page
+        productname.setText(product_list_details_page.get(position).name);
+        productprice.setText(product_list_details_page.get(position).price);
+        secondprice.setText(product_list_details_page.get(position).price);
+        rentdays.setText(product_list_details_page.get(position).days);
+
+        // convert product image from bytes to bitmap then set it
+        Bitmap bmp = BitmapFactory.decodeByteArray(product_list_details_page.get(position).image, 0, product_list_details_page.get(position).image.length);
+        productimage.setImageBitmap(bmp);
+
+        // set user information in product details page
+        sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(getActivity());
+        User user=  sqlLiteHelper.get_User(product_list_details_page.get(position).contact_name);
+
+        ownwername.setText(user.name);
+        ownwerphone.setText(user.phone);
+        ownermail.setText(user.email);
+
+        // set product is available is not
+        int aval ;
+        aval=product_list_details_page.get(position).avail;
+        if(aval==1){
+            avaialable.setText("available");
+        }else{
+            avaialable.setText(" Not available");
+            avaialable.setBackgroundColor(avaialable.getContext().getResources().getColor(R.color.red));
+        }
+
+
+
+
+
+
 
         return v;
     }

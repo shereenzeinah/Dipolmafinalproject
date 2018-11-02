@@ -106,7 +106,7 @@ public class ProductsFragment extends Fragment implements RecycleViewAdapter.Ite
     public void onItemClick(View view, int position) {
 
 
-        ProductDetailsFragment fragment_details=new ProductDetailsFragment();
+        ProductDetailsFragment fragment_details=new ProductDetailsFragment(products_lists);
 
         FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
         FragmentTransaction fragmenttranscation=fragmentManager.beginTransaction();

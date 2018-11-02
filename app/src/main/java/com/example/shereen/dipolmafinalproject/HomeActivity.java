@@ -47,7 +47,7 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         products_lists = new ArrayList<>();
-        String Names[]={"The Violet and the Tom ", "The Student Prince (The Student Prince, #1)","Heart in Hand ","Close Protection  ","Drunk Text  ","Evenfall (In the Company of Shadows, #1) ","Control","Blood Red"};
+       /* String Names[]={"The Violet and the Tom ", "The Student Prince (The Student Prince, #1)","Heart in Hand ","Close Protection  ","Drunk Text  ","Evenfall (In the Company of Shadows, #1) ","Control","Blood Red"};
         int Desc[]={1,2,3,4,5,6,7,8};
         int Images[]={R.drawable.ic_menu_camera,R.drawable.ic_menu_camera , R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera,R.drawable.ic_menu_camera,R.drawable.ic_menu_camera,R.drawable.ic_menu_camera};
 
@@ -60,7 +60,11 @@ public class HomeActivity extends AppCompatActivity
             //product.book_image=(Images[i]);
             products_lists.add(product);
 
-        }
+        }*/
+        sqlLiteHelper sql = new sqlLiteHelper(HomeActivity.this);
+        products_lists=sql.get_Products_Data();
+
+
 
         FragmentManager fragmentmanager = getSupportFragmentManager();
         FragmentTransaction fragmenttranscation = fragmentmanager.beginTransaction();
