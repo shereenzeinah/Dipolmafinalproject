@@ -22,4 +22,40 @@ public class Product {
         this.image=image;
 
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getContact_name() {
+        return contact_name;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public int getAvail() {
+        return avail;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
 }

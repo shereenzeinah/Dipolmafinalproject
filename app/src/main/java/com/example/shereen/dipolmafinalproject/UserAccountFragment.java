@@ -111,7 +111,7 @@ public class UserAccountFragment extends Fragment {
         TextView username_profile = (TextView) v.findViewById(R.id.usernameprofile);
         username_profile.setText(username);
 
-        Button add_product = (Button) v.findViewById(R.id.addproduct);
+        add_product = (Button) v.findViewById(R.id.addproduct);
         add_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

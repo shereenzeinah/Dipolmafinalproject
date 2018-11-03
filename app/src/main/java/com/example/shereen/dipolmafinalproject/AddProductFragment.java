@@ -50,7 +50,7 @@ public class AddProductFragment extends Fragment {
     SharedPreferences sharedPreferences;
     String user_details = "user_Details";
     public CircleImageView add_photo ;
-    private static final int PICK_FROM_GALLERY = 1;
+    private static final int PICK_FROM_GALLERY = 999;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -148,10 +148,11 @@ public class AddProductFragment extends Fragment {
         sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(getContext());
         User user = sqlLiteHelper.get_User(email);
         Random random= new Random();
-        Log.d(TAG, "add_product: ");
 
         Product product = new Product( pr_name, user.lat,user.lng,pr_price, 0, 1 ,user.name, random.nextInt()/1000 , imageViewToByte(add_photo));
-       // sqlLiteHelper.insert_product(product);
+        sqlLiteHelper.insert_product(product);
+        Log.d(TAG, "add_product: "+ product.getImage());
+
     }
     public byte[] imageViewToByte(ImageView image) {
         Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
@@ -187,9 +188,8 @@ public class AddProductFragment extends Fragment {
             try {
                 Log.d(TAG, "onActivityResult: ");
 
-                Context applicationContext = AddProductFragment.getContextOfApplication();
-                InputStream inputStream = applicationContext.getContentResolver().openInputStream(uri);
-
+                //Context applicationContext = AddProductFragment.getContextOfApplication();
+                InputStream inputStream = getContext().getContentResolver().openInputStream(uri);
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 add_photo.setImageBitmap(bitmap);
 
