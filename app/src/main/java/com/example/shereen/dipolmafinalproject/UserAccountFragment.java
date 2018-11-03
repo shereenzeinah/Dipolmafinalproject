@@ -5,11 +5,14 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -80,6 +83,19 @@ public class UserAccountFragment extends Fragment {
         rec.setLayoutManager(new LinearLayoutManager(getActivity()));
         RecycleAdapter recadapter = new RecycleAdapter( products_lists);
         rec.setAdapter(recadapter);
+
+        //add product button
+        Button add_product = (Button) v.findViewById(R.id.addproduct);
+        add_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddProductFragment addProductFragment = new AddProductFragment();
+                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmenttranscation=fragmentManager.beginTransaction();
+                fragmenttranscation.replace(R.id.fragment,addProductFragment);
+                fragmenttranscation.commit();
+            }
+        });
 
         //get user first letter
         TextView profile_letter = (TextView) v.findViewById(R.id.profilealph_);

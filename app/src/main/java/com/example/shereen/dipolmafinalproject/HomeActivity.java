@@ -23,7 +23,7 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public  static ArrayList<Product> products_lists;
-    public Toolbar toolbar;
+    public  static Toolbar toolbar;
     SharedPreferences sharedPreferences;
     String sharedPrefName = "Login";
     String user_details = "user_Details";
@@ -143,6 +143,7 @@ public class HomeActivity extends AppCompatActivity
             fragmenttranscation.commit();
            // set title of actionbar
             toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Home</font>"));
+            toolbar.setBackgroundColor(this.getResources().getColor(R.color.logingreen));
 
         } else if (id == R.id.nav_settings) {
             FragmentManager fragmentmanager = getSupportFragmentManager();
@@ -152,6 +153,7 @@ public class HomeActivity extends AppCompatActivity
             fragmenttranscation.commit();
             // set title of actionbar
             toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Settings</font>"));
+            toolbar.setBackgroundColor(this.getResources().getColor(R.color.logingreen));
 
         } else if (id == R.id.nav_slideshow) {
 
