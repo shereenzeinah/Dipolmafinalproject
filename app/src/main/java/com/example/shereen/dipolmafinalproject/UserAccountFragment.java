@@ -84,6 +84,19 @@ public class UserAccountFragment extends Fragment {
         RecycleAdapter recadapter = new RecycleAdapter( products_lists);
         rec.setAdapter(recadapter);
 
+        //add product button
+        Button add_product = (Button) v.findViewById(R.id.addproduct);
+        add_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddProductFragment addProductFragment = new AddProductFragment();
+                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmenttranscation=fragmentManager.beginTransaction();
+                fragmenttranscation.replace(R.id.fragment,addProductFragment);
+                fragmenttranscation.commit();
+            }
+        });
+
         //get user first letter
         TextView profile_letter = (TextView) v.findViewById(R.id.profilealph_);
         sharedPreferences = this.getActivity().getSharedPreferences(user_details,MODE_PRIVATE);
