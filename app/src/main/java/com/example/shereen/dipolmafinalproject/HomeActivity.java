@@ -23,7 +23,7 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public  static ArrayList<Product> products_lists;
-    public Toolbar toolbar;
+    public static Toolbar toolbar;
     SharedPreferences sharedPreferences;
     String sharedPrefName = "Login";
     String user_details = "user_Details";
