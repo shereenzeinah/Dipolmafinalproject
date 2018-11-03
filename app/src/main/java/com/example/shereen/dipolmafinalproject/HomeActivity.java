@@ -1,5 +1,7 @@
 package com.example.shereen.dipolmafinalproject;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -21,7 +23,11 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public  static ArrayList<Product> products_lists;
-public Toolbar toolbar;
+    public Toolbar toolbar;
+    SharedPreferences sharedPreferences;
+    String sharedPrefName = "Login";
+    String user_details = "user_Details";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,11 +49,18 @@ public Toolbar toolbar;
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
 
-        TextView username = (TextView) headerView.findViewById(R.id.usernameaccount);
+        sharedPreferences = getSharedPreferences(user_details,MODE_PRIVATE);
+        String email = sharedPreferences.getString("email", "");
+        TextView username_profile = (TextView) headerView.findViewById(R.id.usernameaccount);
+        sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(HomeActivity.this);
+        User user = sqlLiteHelper.get_User(email);
+        String username = user.name;
+        username_profile.setText(username);
+
         // set name of user
-        //username.setText();
+        username_profile.setText(username);
         // open user account
-        username.setOnClickListener(new View.OnClickListener() {
+        username_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentmanager = getSupportFragmentManager();
@@ -59,7 +72,6 @@ public Toolbar toolbar;
                 toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Profile</font>"));
                  toolbar.setBackgroundResource(R.drawable.capture);
                 toolbar.setTitleMargin(180,0,0,0);
-
 
 
                 // close side menue
@@ -83,10 +95,6 @@ public Toolbar toolbar;
         ProductsFragment fragment_home = new ProductsFragment();
         fragmenttranscation.replace(R.id.fragment,fragment_home);
         fragmenttranscation.commit();
-
-
-
-
     }
 
     @Override
@@ -148,6 +156,15 @@ public Toolbar toolbar;
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_logout) {
+
+            sharedPreferences = getSharedPreferences(sharedPrefName,MODE_PRIVATE);
+            SharedPreferences.Editor editor= sharedPreferences.edit();
+            editor.putString("name" , "");
+            editor.putString("password" , "");
+            editor.putInt("check", 0);
+            editor.commit();
+            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_share) {
 

@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
@@ -27,7 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class location extends FragmentActivity implements  OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-
+    public static String TAG="TEST4";
     private GoogleMap mMap;
     GoogleApiClient googleApiClient;
     double lat,lng;
@@ -60,7 +61,21 @@ public class location extends FragmentActivity implements  OnMapReadyCallback,
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
+            Log.d(TAG, "onCreate: ");
         }
+    }
+
+    @Override
+    protected void onStart() {
+        googleApiClient.connect();
+        super.onStart();
+    }
+
+
+    @Override
+    protected void onStop() {
+        googleApiClient.disconnect();
+        super.onStop();
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -71,9 +86,6 @@ public class location extends FragmentActivity implements  OnMapReadyCallback,
             Toast.makeText(location.this, "No Permitions Granted", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -101,7 +113,6 @@ public class location extends FragmentActivity implements  OnMapReadyCallback,
         lat=point.latitude;
         lng=point.longitude;
 
-
         // Setting latitude and longitude for the marker
         markerOptions.position(point);
 
@@ -117,20 +128,26 @@ public class location extends FragmentActivity implements  OnMapReadyCallback,
                 String user_lng = String.valueOf(lng);
                 addSharedPreference(user_lat , user_lng);
                 Toast.makeText(this, "Your address is updated", Toast.LENGTH_SHORT).show();
+                //location.this.finish();
                 startActivity(intent);
         }
-
         return super.onKeyDown(keyCode, event);
     }
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        Log.d(TAG, "onConnected: ");
+
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
                     android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         } else {
+
+            Log.d(TAG, "onConnected:0 ");
             Location userCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
             if (userCurrentLocation != null) {
+                Log.d(TAG, "onConnected:1 ");
+
                 MarkerOptions currentUserLocation = new MarkerOptions();
 
                 lat=userCurrentLocation.getLatitude();
@@ -144,6 +161,7 @@ public class location extends FragmentActivity implements  OnMapReadyCallback,
             }
         }
     }
+
 
     @Override
     public void onConnectionSuspended(int i) {

@@ -118,15 +118,17 @@ public class ProductDetailsFragment extends Fragment {
         // set product is available is not
         int aval ;
         aval=product_list_details_page.get(position).avail;
-        if(aval==1){
-            avaialable.setText("available");
-        }else{
+        if(aval==1)
+            {
+                avaialable.setText("available");
+            }
+        else
+            {
             avaialable.setText(" Not available");
             avaialable.setBackgroundColor(avaialable.getContext().getResources().getColor(R.color.red));
-        }
+             }
 
         // pop up menu appear
-
            rent.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
@@ -147,10 +149,6 @@ public class ProductDetailsFragment extends Fragment {
                    popup.show();
                }
            });
-
-
-
-
 
         return v;
     }

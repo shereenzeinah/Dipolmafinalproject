@@ -10,12 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     String sharedPrefName = "Login";
+    String user_details = "user_Details";
     static String TAG="TEST";
 
     @Override
@@ -28,24 +28,22 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: here");
-                EditText editText_name = (EditText) findViewById(R.id.loginemail);
+                EditText editText_email = (EditText) findViewById(R.id.loginemail);
                 EditText editText_password = (EditText) findViewById(R.id.loginpassword);
-                String name = editText_name.getText().toString();
+                String email = editText_email.getText().toString();
                 String password = editText_password.getText().toString();
-                login(name,password);
+                login(email,password);
             }
         });
     }
 
-    public void login(String name, String password) {
+    public void login(String email, String password) {
         sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(LoginActivity.this);
         ArrayList<User> users = sqlLiteHelper.get_Users_Data();
-        Log.d(TAG, "login: here"+users.size());
         for (int i = 0; i < users.size(); i++)
         {
-            Log.d(TAG, "login: "+users.get(i).name);
-            if (users.get(i).name.equals(name)) {
-                Log.d(TAG, "login: here" +name);
+            Log.d(TAG, "login: 1 " +users.get(i).password);
+            if (users.get(i).email.equals(email)) {
                 if (users.get(i).password.equals(password)) {
                     Toast.makeText(LoginActivity.this, "Signed in", Toast.LENGTH_LONG).show();
                     sharedPreferences = getSharedPreferences(sharedPrefName, MODE_PRIVATE);
@@ -61,7 +59,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-
+    //We need to save his email anyway for later use.
+    public void add_user_Details()
+    {
+        EditText name = (EditText) findViewById(R.id.loginemail);
+        String email = name.getText().toString();
+        Log.d(TAG, "add_user_Details: " + email);
+        sharedPreferences = getSharedPreferences(user_details, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("email", email);
+        editor.commit();
+    }
     public void save_username_password() {
         final Dialog dialog = new Dialog(LoginActivity.this);
         dialog.setContentView(R.layout.activity_dialoug);
@@ -74,6 +82,8 @@ public class LoginActivity extends AppCompatActivity {
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                add_user_Details();
+               
                 Toast.makeText(LoginActivity.this, "Password and username not saved", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
@@ -91,9 +101,11 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("check", 1);
                 editor.commit();
+
+                add_user_Details();
+
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);
-
             }
 
         });

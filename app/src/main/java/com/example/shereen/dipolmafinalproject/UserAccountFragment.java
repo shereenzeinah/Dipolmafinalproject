@@ -1,6 +1,7 @@
 package com.example.shereen.dipolmafinalproject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.example.shereen.dipolmafinalproject.HomeActivity.products_lists;
 
 
@@ -22,6 +25,10 @@ import static com.example.shereen.dipolmafinalproject.HomeActivity.products_list
  * create an instance of this fragment.
  */
 public class UserAccountFragment extends Fragment {
+    SharedPreferences sharedPreferences;
+    String user_details = "user_Details";
+
+    static String TAG="TEST3";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -73,6 +80,20 @@ public class UserAccountFragment extends Fragment {
         rec.setLayoutManager(new LinearLayoutManager(getActivity()));
         RecycleAdapter recadapter = new RecycleAdapter( products_lists);
         rec.setAdapter(recadapter);
+
+        //get user first letter
+        TextView profile_letter = (TextView) v.findViewById(R.id.profilealph_);
+        sharedPreferences = this.getActivity().getSharedPreferences(user_details,MODE_PRIVATE);
+        String email = sharedPreferences.getString("email", "");
+        char letter = email.charAt(0);
+        profile_letter.setText(Character.toString(letter));
+
+        //get user data including name , address etc.
+        sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(this.getActivity());
+        User user = sqlLiteHelper.get_User(email);
+        String username = user.name;
+        TextView username_profile = (TextView) v.findViewById(R.id.usernameprofile);
+        username_profile.setText(username);
         return  v ;
     }
 
@@ -86,8 +107,6 @@ public class UserAccountFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-
     }
 
     @Override

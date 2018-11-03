@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,8 @@ import java.util.ArrayList;
  */
 
 public class sqlLiteHelper extends SQLiteOpenHelper {
+
+    public static final String TAG="TEST1";
 
     public static final String database_name="rent_project";
     final String Table_Name1= "users";
@@ -63,7 +66,7 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db= this.getWritableDatabase();
         ContentValues values= new ContentValues();
-
+        Log.d(TAG, "insert_user: " + user.email);
         values.put(name_key,user.name);
         values.put(phone_key,user.phone);
         values.put(lat_key,user.lat);
@@ -147,9 +150,9 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
             do
             {   String name=cursor.getString(0);
                 int phone=Integer.parseInt(cursor.getString(1));
-                double lat=cursor.getDouble(2);
-                double lng=cursor.getDouble(3);
-                String email=cursor.getString(4);
+                String email=cursor.getString(2);
+                double lat=cursor.getDouble(3);
+                double lng=cursor.getDouble(4);
                 String password=cursor.getString(5);
                 if(user_email.equals(email))
                 {
@@ -205,10 +208,11 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
             do
             {   String name=cursor.getString(0);
                 int phone=Integer.parseInt(cursor.getString(1));
-                double lat=cursor.getDouble(2);
-                double lng=cursor.getDouble(3);
-                String email=cursor.getString(4);
+                String email=cursor.getString(2);
+                double lat=cursor.getDouble(3);
+                double lng=cursor.getDouble(4);
                 String password=cursor.getString(5);
+
                 list.add( new User(name,phone,lat,lng,email,password));
             }
             while (cursor.moveToNext());
