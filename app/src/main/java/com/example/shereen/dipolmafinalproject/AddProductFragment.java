@@ -4,27 +4,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import static com.example.shereen.dipolmafinalproject.HomeActivity.products_lists;
+import static com.example.shereen.dipolmafinalproject.HomeActivity.toolbar;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link UserAccountFragment.OnFragmentInteractionListener} interface
+ * {@link AddProductFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link UserAccountFragment#newInstance} factory method to
+ * Use the {@link AddProductFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserAccountFragment extends Fragment {
+public class AddProductFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,7 +32,7 @@ public class UserAccountFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public UserAccountFragment() {
+    public AddProductFragment() {
         // Required empty public constructor
     }
 
@@ -46,11 +42,11 @@ public class UserAccountFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment UserAccountFragment.
+     * @return A new instance of fragment AddProductFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserAccountFragment newInstance(String param1, String param2) {
-        UserAccountFragment fragment = new UserAccountFragment();
+    public static AddProductFragment newInstance(String param1, String param2) {
+        AddProductFragment fragment = new AddProductFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,24 +67,11 @@ public class UserAccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_user_account, container, false);
-        RecyclerView rec = (RecyclerView) v.findViewById(R.id.accountrecycler);
-        rec.setLayoutManager(new LinearLayoutManager(getActivity()));
-        RecycleAdapter recadapter = new RecycleAdapter( products_lists);
-        rec.setAdapter(recadapter);
-
-        Button add_product = (Button) v.findViewById(R.id.addproduct);
-        add_product.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddProductFragment addProductFragment = new AddProductFragment();
-                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmenttranscation=fragmentManager.beginTransaction();
-                fragmenttranscation.replace(R.id.fragment,addProductFragment);
-                fragmenttranscation.commit();
-            }
-        });
-        return  v ;
+        View v = inflater.inflate(R.layout.fragment_add_product, container, false);
+        toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Add Product</font>"));
+        toolbar.setBackgroundColor(getActivity().getResources().getColor(R.color.logingreen));
+        toolbar.setTitleMargin(140,0,0,0);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -101,7 +84,6 @@ public class UserAccountFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
 
     }
 

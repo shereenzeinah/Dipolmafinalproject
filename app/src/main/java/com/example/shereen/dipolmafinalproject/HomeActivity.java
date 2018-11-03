@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public  static ArrayList<Product> products_lists;
-public Toolbar toolbar;
+public  static Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +57,7 @@ public Toolbar toolbar;
                 fragmenttranscation.commit();
                 // set title of actionbar
                 toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Profile</font>"));
-                 toolbar.setBackgroundResource(R.drawable.capture);
+                toolbar.setBackgroundResource(R.drawable.capture);
                 toolbar.setTitleMargin(180,0,0,0);
 
 
@@ -135,6 +135,7 @@ public Toolbar toolbar;
             fragmenttranscation.commit();
            // set title of actionbar
             toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Home</font>"));
+            toolbar.setBackgroundColor(this.getResources().getColor(R.color.logingreen));
 
         } else if (id == R.id.nav_settings) {
             FragmentManager fragmentmanager = getSupportFragmentManager();
@@ -144,6 +145,7 @@ public Toolbar toolbar;
             fragmenttranscation.commit();
             // set title of actionbar
             toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Settings</font>"));
+            toolbar.setBackgroundColor(this.getResources().getColor(R.color.logingreen));
 
         } else if (id == R.id.nav_slideshow) {
 

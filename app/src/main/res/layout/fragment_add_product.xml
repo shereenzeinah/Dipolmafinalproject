@@ -1,0 +1,96 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:weightSum="4"
+    android:background="@color/white"
+    tools:context="com.example.shereen.dipolmafinalproject.AddProductFragment">
+
+   <TextView
+       android:layout_marginTop="20dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Product Name "
+       android:layout_marginBottom="10dp"
+
+       />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:background="@drawable/edit_text_addproduct"
+        android:paddingLeft="20dp"
+        android:id="@+id/addproduct_productname"
+        android:layout_marginBottom="20dp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Price "
+        android:layout_marginBottom="10dp"
+
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:background="@drawable/edit_text_addproduct"
+        android:paddingLeft="20dp"
+        android:id="@+id/addproduct_productprice"
+        android:layout_marginBottom="20dp"
+
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:weightSum="3">
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Image "
+        android:layout_marginBottom="10dp" />
+
+    /<ImageButton
+        android:id="@+id/setproductimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_folder"
+        android:background="@color/white"
+        android:layout_marginLeft="10dp"
+        />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/addproduct_productimage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="30dp"
+        android:layout_weight="2"
+
+        />
+
+    <Button
+        android:id="@+id/addprouctform"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="70dp"
+        android:background="@color/orange"
+        android:text="add product"
+        android:textColor="@color/white"
+
+        />
+
+</LinearLayout>
