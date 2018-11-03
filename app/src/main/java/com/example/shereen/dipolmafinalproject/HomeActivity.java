@@ -23,7 +23,7 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public  static ArrayList<Product> products_lists;
-    public Toolbar toolbar;
+    public static Toolbar toolbar;
     SharedPreferences sharedPreferences;
     String sharedPrefName = "Login";
     String user_details = "user_Details";
@@ -52,8 +52,10 @@ public class HomeActivity extends AppCompatActivity
         sharedPreferences = getSharedPreferences(user_details,MODE_PRIVATE);
         String email = sharedPreferences.getString("email", "");
         TextView username_profile = (TextView) headerView.findViewById(R.id.usernameaccount);
+
         sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(HomeActivity.this);
         User user = sqlLiteHelper.get_User(email);
+
         String username = user.name;
         username_profile.setText(username);
 
@@ -74,7 +76,7 @@ public class HomeActivity extends AppCompatActivity
                 toolbar.setTitleMargin(180,0,0,0);
 
 
-                // close side menue
+                // close side menu
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
 

@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     public void login(String email, String password) {
         sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(LoginActivity.this);
         ArrayList<User> users = sqlLiteHelper.get_Users_Data();
+
         for (int i = 0; i < users.size(); i++)
         {
             Log.d(TAG, "login: 1 " +users.get(i).password);

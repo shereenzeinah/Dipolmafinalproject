@@ -81,6 +81,7 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
     //function to insert a product in database
     public void insert_product(Product product)
     {
+        Log.d(TAG, "insert_product: ");
         SQLiteDatabase db= this.getWritableDatabase();
         ContentValues values= new ContentValues();
 
