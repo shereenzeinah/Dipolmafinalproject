@@ -28,7 +28,7 @@ public RecycleAdapter(ArrayList<Product> product ) {
 @Override
 public RecycleAdapter.SecondRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_row , parent , false);
+        View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.profile_recyclerview_row , parent , false);
         SecondRecyclerViewHolder holder =new SecondRecyclerViewHolder(row);
         return holder;
         }
@@ -37,11 +37,8 @@ public RecycleAdapter.SecondRecyclerViewHolder onCreateViewHolder(ViewGroup pare
     public void onBindViewHolder(SecondRecyclerViewHolder holder, int position) {
         Bitmap bmp = BitmapFactory.decodeByteArray(products.get(position).image, 0, products.get(position).image.length);
         holder.name.setText(products.get(position).name);
-
         holder.image.setImageBitmap(bmp);
     }
-
-
 
 @Override
 public int getItemCount() {

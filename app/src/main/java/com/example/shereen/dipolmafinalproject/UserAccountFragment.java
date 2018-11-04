@@ -81,7 +81,7 @@ public class UserAccountFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_user_account, container, false);
         RecyclerView rec = (RecyclerView) v.findViewById(R.id.accountrecycler);
         rec.setLayoutManager(new LinearLayoutManager(getActivity()));
-        RecycleAdapter recadapter = new RecycleAdapter( products_lists);
+        RecycleAdapter recadapter = new RecycleAdapter(products_lists);
         rec.setAdapter(recadapter);
 
         //add product button

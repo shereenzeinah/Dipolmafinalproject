@@ -93,6 +93,8 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
         values.put(product_avail,product.avail);
         values.put(product_contact,product.contact_name);
         values.put(product_id,product.id);
+        values.put(imagepath_key,product.image);
+
 
         db.insert(Table_Name2,null,values);
         // db.close();
