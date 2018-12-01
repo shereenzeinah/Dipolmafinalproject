@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity
                 fragmenttranscation.commit();
                 // set title of actionbar
                 toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Profile</font>"));
-                 toolbar.setBackgroundResource(R.drawable.capture);
+                 toolbar.setBackgroundColor(getResources().getColor(R.color.logingreen));
                 toolbar.setTitleMargin(180,0,0,0);
 
 

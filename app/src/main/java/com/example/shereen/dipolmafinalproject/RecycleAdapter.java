@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,14 +49,14 @@ public class SecondRecyclerViewHolder extends RecyclerView.ViewHolder{
 
     TextView name  ;
     ImageView image ;
-    Button edit , delete ;
+    ImageButton edit , delete ;
     public SecondRecyclerViewHolder(View itemView) {
         super(itemView);
         name=(TextView)itemView.findViewById(R.id.productnameprofile);
 
         image=(ImageView) itemView.findViewById(R.id.productimageprofile);
-        edit= (Button) itemView.findViewById(R.id.edit);
-        delete= (Button) itemView.findViewById(R.id.delete);
+        edit= (ImageButton) itemView.findViewById(R.id.options);
+
     }
 
 

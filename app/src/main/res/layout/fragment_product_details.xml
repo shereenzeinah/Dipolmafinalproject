@@ -18,63 +18,40 @@
 
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rent days"
-        />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.25"
-        android:weightSum="3"
+        android:layout_weight="0.4"
+        android:layout_marginTop="10dp"
 
+        android:weightSum="2">
 
-        >
-
-        <EditText
-
+        <TextView
+            android:id="@+id/rentdaysleft"
             android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:id="@+id/edittext_from"
-            android:background="@drawable/btn_product_details"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:hint="From"
+            android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/gray"
-            />
-        <EditText
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:id="@+id/edittext_to"
-            android:background="@drawable/btn_product_details"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:hint="to"
-            android:gravity="center"
-            android:textColor="@color/gray"
-            />
+            android:text=""
+            android:visibility="invisible"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
 
         <Button
+
             android:id="@+id/available"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:background="@color/logingreen"
-            android:text="Available"
+            android:layout_weight="1"
+            android:text="available"
             android:textColor="@color/white"
-            android:layout_marginLeft="50dp"
-            />
-
-
+            android:background="@color/logingreen" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.25"
+        android:layout_weight="0.4"
         android:layout_marginTop="10dp"
 
         android:weightSum="2">
@@ -83,9 +60,18 @@
             android:id="@+id/pd_price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="00LE"
+            android:layout_weight="0.5"
+            android:gravity="right"
+            android:text="00"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="left"
+            android:text="LE"
             android:textColor="@color/black"
             android:textSize="20dp" />
 
@@ -95,9 +81,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@color/orange"
             android:text="RENT"
-            android:textColor="@color/white"
-            android:background="@color/orange" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <TextView

@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -94,14 +93,13 @@ public class ProductDetailsFragment extends Fragment {
         TextView location = (TextView) v.findViewById(R.id.pd_productlocation);
         Button avaialable = (Button) v.findViewById(R.id.available);
         final Button rent = (Button) v.findViewById(R.id.rent);
-        EditText from = (EditText) v.findViewById(R.id.edittext_from);
-        EditText to = (EditText) v.findViewById(R.id.edittext_to);
+
 
         // set product information in product details page
         productname.setText(product_list_details_page.get(position).name);
-        productprice.setText(product_list_details_page.get(position).price);
-        secondprice.setText(product_list_details_page.get(position).price);
-        rentdays.setText(product_list_details_page.get(position).days);
+        productprice.setText(String.valueOf(product_list_details_page.get(position).price));
+        secondprice.setText(String.valueOf(product_list_details_page.get(position).price));
+        rentdays.setText(String.valueOf(product_list_details_page.get(position).days));
 
         // convert product image from bytes to bitmap then set it
         Bitmap bmp = BitmapFactory.decodeByteArray(product_list_details_page.get(position).image, 0, product_list_details_page.get(position).image.length);
@@ -112,7 +110,7 @@ public class ProductDetailsFragment extends Fragment {
         User user=  sqlLiteHelper.get_User(product_list_details_page.get(position).contact_name);
 
         ownwername.setText(user.name);
-        ownwerphone.setText(user.phone);
+        ownwerphone.setText(String.valueOf(user.phone));
         ownermail.setText(user.email);
 
         // set product is available is not

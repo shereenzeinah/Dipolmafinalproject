@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,9 +9,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:background="@drawable/blurnewmainbackground"
+        android:background="@color/white"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
         <TextView
@@ -21,13 +27,13 @@
             android:layout_gravity="center"
             android:layout_marginLeft="120dp"
             android:layout_marginRight="120dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="0.25"
             android:background="@drawable/circularshape"
             android:gravity="center"
             android:text="T"
             android:textAllCaps="true"
-            android:textColor="@color/white"
+            android:textColor="@color/logingreen"
             android:textSize="50dp"
             android:textStyle="bold" />
 
@@ -45,7 +51,9 @@
         <Button
             android:id="@+id/addproduct"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:layout_marginBottom="20dp"
             android:layout_gravity="center"
             android:background="@drawable/btn"
             android:backgroundTint="@color/logingreen"
@@ -64,4 +72,5 @@
         >
 
     </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
