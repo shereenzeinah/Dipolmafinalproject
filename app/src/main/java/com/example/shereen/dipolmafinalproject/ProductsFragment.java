@@ -1,5 +1,6 @@
 package com.example.shereen.dipolmafinalproject;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
@@ -16,7 +17,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
-import static com.example.shereen.dipolmafinalproject.HomeActivity.products_lists;
+import java.util.ArrayList;
+
+//import static com.example.shereen.dipolmafinalproject.HomeActivity.products_lists;
 
 
 /**
@@ -28,6 +31,7 @@ import static com.example.shereen.dipolmafinalproject.HomeActivity.products_list
  * create an instance of this fragment.
  */
 public class ProductsFragment extends Fragment implements RecycleViewAdapter.ItemClickListener{
+    public  ArrayList<Product> products_lists;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,8 +44,15 @@ public class ProductsFragment extends Fragment implements RecycleViewAdapter.Ite
 
     private OnFragmentInteractionListener mListener;
 
+
+
     public ProductsFragment() {
         // Required empty public constructor
+    }
+    @SuppressLint("ValidFragment")
+    public ProductsFragment(ArrayList<Product> products)
+    {
+     this.products_lists=products;
     }
 
     /**
@@ -93,6 +104,7 @@ public class ProductsFragment extends Fragment implements RecycleViewAdapter.Ite
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>
                 (getActivity(),android.R.layout.select_dialog_item,get_products_names());
+
         //Getting the instance of AutoCompleteTextView
         final AutoCompleteTextView actv= (AutoCompleteTextView)v.findViewById(R.id.autoCompleteTextView1);
         actv.setThreshold(1);//will start working from first character
@@ -104,10 +116,8 @@ public class ProductsFragment extends Fragment implements RecycleViewAdapter.Ite
             public void onClick(View v) {
                 String search_item= String.valueOf(actv.getText());
                 sqlLiteHelper sqlLiteHelper= new sqlLiteHelper(getActivity());
-                Product product = sqlLiteHelper.get_product(search_item);
-
-                ProductDetailsFragment fragment_details=new ProductDetailsFragment(product);
-
+                ArrayList<Product> products = sqlLiteHelper.get_Products_Data_search(search_item);
+                ProductsFragment fragment_details=new ProductsFragment(products);
                 FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmenttranscation=fragmentManager.beginTransaction();
                 fragmenttranscation.replace(R.id.fragment,fragment_details);
@@ -143,7 +153,7 @@ public class ProductsFragment extends Fragment implements RecycleViewAdapter.Ite
     @Override
     public void onItemClick(View view, int position) {
         sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(getActivity());
-        Product product=  sqlLiteHelper.get_product(products_lists.get(position).getName());
+        Product product=  sqlLiteHelper.get_product(products_lists.get(position).getId());
 
         ProductDetailsFragment fragment_details=new ProductDetailsFragment(product);
 

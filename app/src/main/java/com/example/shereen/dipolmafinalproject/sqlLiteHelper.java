@@ -168,9 +168,8 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
         return found_user;
     }
     //get a specific user data
-    public Product get_product(String name)
+    public Product get_product(int p_id)
     {
-        Log.d(TAG, "get_product: search name"+ name);
         Product found_product = null;
         String query= "SELECT * FROM " + Table_Name2;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -192,16 +191,14 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
                 byte [] image = cursor.getBlob(8);
 
 
-                if(name.equals(pr_name))
+                if(p_id==id)
                 {
                     found_product = new Product(pr_name,lat,lng,price,days,avail,contact_name,id,image);
-                    Log.d(TAG, "get_product: found" + name);
                 }
 
             }
             while (cursor.moveToNext());
         }
-        Log.d(TAG, "get_product: here " + found_product.getName());
         return found_product;
     }
     //return all users
@@ -251,6 +248,37 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
 
 
                 list.add( new Product(pr_name,lat,lng,price,days,avail,contact_name,id,image));
+            }
+
+            while (cursor.moveToNext());
+        }
+        return list;
+    }
+    public ArrayList<Product> get_Products_Data_search(String name)
+    {
+        ArrayList<Product> list = new ArrayList<Product>();
+        String query= "SELECT * FROM " + Table_Name2;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        if(cursor.moveToFirst())
+        {
+            do
+            {
+                String pr_name=cursor.getString(0);
+                double lat=Double.parseDouble(cursor.getString(1));
+                double lng=Double.parseDouble(cursor.getString(2));
+                int price=Integer.parseInt(cursor.getString(3));
+                int days=Integer.parseInt(cursor.getString(4));
+                int avail=Integer.parseInt(cursor.getString(5));
+                String contact_name=cursor.getString(6);
+                int id=Integer.parseInt(cursor.getString(7));
+                byte [] image = cursor.getBlob(8);
+
+                if(name.equals(pr_name))
+                {
+                    list.add( new Product(pr_name,lat,lng,price,days,avail,contact_name,id,image));
+                }
+
             }
 
             while (cursor.moveToNext());

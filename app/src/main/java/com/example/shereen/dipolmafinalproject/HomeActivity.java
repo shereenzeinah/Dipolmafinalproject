@@ -92,7 +92,7 @@ public class HomeActivity extends AppCompatActivity
 // open productss fragment by default
         FragmentManager fragmentmanager = getSupportFragmentManager();
         FragmentTransaction fragmenttranscation = fragmentmanager.beginTransaction();
-        ProductsFragment fragment_home = new ProductsFragment();
+        ProductsFragment fragment_home = new ProductsFragment(products_lists);
         fragmenttranscation.replace(R.id.fragment,fragment_home);
         fragmenttranscation.commit();
     }
@@ -138,7 +138,7 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             FragmentManager fragmentmanager = getSupportFragmentManager();
             FragmentTransaction fragmenttranscation = fragmentmanager.beginTransaction();
-            ProductsFragment fragment_home = new ProductsFragment();
+            ProductsFragment fragment_home = new ProductsFragment(products_lists);
             fragmenttranscation.replace(R.id.fragment,fragment_home);
             fragmenttranscation.commit();
            // set title of actionbar
