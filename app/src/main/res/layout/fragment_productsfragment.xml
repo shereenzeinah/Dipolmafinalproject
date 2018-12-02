@@ -3,10 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="2"
+    android:orientation="vertical"
 
     tools:context="com.example.shereen.dipolmafinalproject.ProductsFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:id="@+id/searchbar"
+
+        />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvNumbers"
         android:layout_width="match_parent"

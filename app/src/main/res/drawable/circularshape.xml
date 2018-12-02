@@ -4,6 +4,9 @@
     <stroke android:color="@color/logingreen" android:width="3.5dip"/>
 
 
+    <size
+        android:width="100dp"
+        android:height="100dp"/>
 
 
 </shape>
