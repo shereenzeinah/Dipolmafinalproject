@@ -1,4 +1,5 @@
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,70 +8,77 @@
     android:background="@color/white"
     tools:context="com.example.shereen.dipolmafinalproject.UserAccountFragment">
 
-    <LinearLayout
+
+
+
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:background="@color/white"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/profilealph_"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="120dp"
-            android:layout_marginRight="120dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0.25"
-            android:background="@drawable/circularshape"
-            android:gravity="center"
-            android:text="T"
-            android:textAllCaps="true"
-            android:textColor="@color/logingreen"
-            android:textSize="50dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/usernameprofile"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.25"
-            android:gravity="center"
-            android:text="user name"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/addproduct"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="0.25"
             android:layout_marginBottom="20dp"
-            android:layout_gravity="center"
-            android:background="@drawable/btn"
-            android:backgroundTint="@color/logingreen"
-            android:padding="15dp"
-            android:text="Add product"
-            android:textColor="@color/white" />
+            android:layout_weight="1"
+            app:layout_scrollFlags="scroll"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profilealph_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="120dp"
+                android:layout_marginRight="120dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/circularshape"
+                android:gravity="center"
+                android:text="T"
+                android:textAllCaps="true"
+                android:textColor="@color/logingreen"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/usernameprofile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="user name"
+                android:textColor="@color/logingreen"
+                android:textSize="20dp"
+
+                android:layout_marginBottom="40dp"/>
+
+            <Button
+                android:id="@+id/addproduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/btn"
+                android:backgroundTint="@color/logingreen"
+                android:padding="15dp"
+                android:text="Add product"
+                android:textColor="@color/white" />
 
 
-    </LinearLayout>
+        </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
         android:id="@+id/accountrecycler"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_weight="4">
 
     </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
