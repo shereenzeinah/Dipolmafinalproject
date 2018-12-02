@@ -32,7 +32,8 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -44,6 +45,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.shereen.dipolmafinalproject.HomeActivity" />
 
         <activity
             android:name=".location"

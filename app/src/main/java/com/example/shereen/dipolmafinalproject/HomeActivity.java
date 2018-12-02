@@ -64,7 +64,7 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentmanager = getSupportFragmentManager();
-                FragmentTransaction fragmenttranscation = fragmentmanager.beginTransaction();
+                FragmentTransaction fragmenttranscation = fragmentmanager.beginTransaction().addToBackStack(null);
                 UserAccountFragment fragment_user = new UserAccountFragment();
                 fragmenttranscation.replace(R.id.fragment,fragment_user);
                 fragmenttranscation.commit();

@@ -119,7 +119,7 @@ public class ProductsFragment extends Fragment implements RecycleViewAdapter.Ite
                 ArrayList<Product> products = sqlLiteHelper.get_Products_Data_search(search_item);
                 ProductsFragment fragment_details=new ProductsFragment(products);
                 FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmenttranscation=fragmentManager.beginTransaction();
+                FragmentTransaction fragmenttranscation=fragmentManager.beginTransaction().addToBackStack(null);
                 fragmenttranscation.replace(R.id.fragment,fragment_details);
                 fragmenttranscation.commit();
 
@@ -158,7 +158,7 @@ public class ProductsFragment extends Fragment implements RecycleViewAdapter.Ite
         ProductDetailsFragment fragment_details=new ProductDetailsFragment(product);
 
         FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmenttranscation=fragmentManager.beginTransaction();
+        FragmentTransaction fragmenttranscation=fragmentManager.beginTransaction().addToBackStack(null);
         fragmenttranscation.replace(R.id.fragment,fragment_details);
         fragmenttranscation.commit();
 
