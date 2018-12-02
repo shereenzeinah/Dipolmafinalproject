@@ -53,7 +53,6 @@ public class SecondRecyclerViewHolder extends RecyclerView.ViewHolder{
     public SecondRecyclerViewHolder(View itemView) {
         super(itemView);
         name=(TextView)itemView.findViewById(R.id.productnameprofile);
-
         image=(ImageView) itemView.findViewById(R.id.productimageprofile);
         edit= (ImageButton) itemView.findViewById(R.id.options);
 

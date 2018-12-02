@@ -9,12 +9,36 @@ public class User {
      double lat,lng;
      int phone;
 
-    public User(String name, int phone,double lat, double lng, String email,  String password) {
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public User(String name, int phone, double lat, double lng, String email, String password) {
         this.name = name;
         this.email = email;
         this.lat=lat;
         this.lng=lng;
         this.password = password;
         this.phone = phone;
-    }
-}
+
+    }}

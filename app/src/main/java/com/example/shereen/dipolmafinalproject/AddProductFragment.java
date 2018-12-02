@@ -149,7 +149,7 @@ public class AddProductFragment extends Fragment {
         User user = sqlLiteHelper.get_User(email);
         Random random= new Random();
 
-        Product product = new Product( pr_name, user.lat,user.lng,pr_price, 0, 1 ,user.name, random.nextInt()/1000 , imageViewToByte(add_photo));
+        Product product = new Product( pr_name, user.lat,user.lng,pr_price, 0, 1 ,user.email, random.nextInt()/1000 , imageViewToByte(add_photo));
         sqlLiteHelper.insert_product(product);
         Log.d(TAG, "add_product: "+ product.getImage());
 

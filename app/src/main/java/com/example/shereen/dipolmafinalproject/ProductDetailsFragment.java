@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 
 /**
@@ -28,6 +27,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class ProductDetailsFragment extends Fragment {
+    public final static String TAG = "TEST00";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,7 +36,7 @@ public class ProductDetailsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-   public ArrayList<Product> product_list_details_page ;
+   public Product product_list_details_page ;
     private OnFragmentInteractionListener mListener;
 
     public ProductDetailsFragment() {
@@ -44,7 +44,7 @@ public class ProductDetailsFragment extends Fragment {
     }
 
     @SuppressLint("ValidFragment")
-    public ProductDetailsFragment(ArrayList<Product> products) {
+    public ProductDetailsFragment(Product products) {
         // Required empty public constructor
         this.product_list_details_page=products;
     }
@@ -81,7 +81,6 @@ public class ProductDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =inflater.inflate(R.layout.fragment_product_details, container, false);
-        int position=getArguments().getInt("position");
         ImageView productimage = (ImageView) v.findViewById(R.id.product_detail_image);
         TextView productname = (TextView) v.findViewById(R.id.pd_productname);
         TextView productprice = (TextView) v.findViewById(R.id.pd_price);
@@ -96,26 +95,28 @@ public class ProductDetailsFragment extends Fragment {
 
 
         // set product information in product details page
-        productname.setText(product_list_details_page.get(position).name);
-        productprice.setText(String.valueOf(product_list_details_page.get(position).price));
-        secondprice.setText(String.valueOf(product_list_details_page.get(position).price));
-        rentdays.setText(String.valueOf(product_list_details_page.get(position).days));
+        productname.setText(product_list_details_page.getName());
+        productprice.setText(String.valueOf(product_list_details_page.getPrice()));
+        secondprice.setText(String.valueOf(product_list_details_page.getPrice()));
+        rentdays.setText(String.valueOf(product_list_details_page.getDays()));
 
         // convert product image from bytes to bitmap then set it
-        Bitmap bmp = BitmapFactory.decodeByteArray(product_list_details_page.get(position).image, 0, product_list_details_page.get(position).image.length);
+        Bitmap bmp = BitmapFactory.decodeByteArray(product_list_details_page.getImage(), 0, product_list_details_page.getImage().length);
         productimage.setImageBitmap(bmp);
 
         // set user information in product details page
         sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(getActivity());
-        User user=  sqlLiteHelper.get_User(product_list_details_page.get(position).contact_name);
+        Log.d(TAG, "onCreateView: user name" + product_list_details_page.getContact_name());
+        User user=  sqlLiteHelper.get_User(product_list_details_page.getContact_name());
+        Log.d(TAG, "onCreateView: " + user);
 
-        ownwername.setText(user.name);
-        ownwerphone.setText(String.valueOf(user.phone));
-        ownermail.setText(user.email);
+        ownwername.setText(user.getName());
+        ownwerphone.setText(String.valueOf(user.getPhone()));
+        ownermail.setText(user.getEmail());
 
         // set product is available is not
         int aval ;
-        aval=product_list_details_page.get(position).avail;
+        aval=product_list_details_page.getAvail();
         if(aval==1)
             {
                 avaialable.setText("available");

@@ -168,8 +168,9 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
         return found_user;
     }
     //get a specific user data
-    public Product get_product(int product_id)
+    public Product get_product(String name)
     {
+        Log.d(TAG, "get_product: search name"+ name);
         Product found_product = null;
         String query= "SELECT * FROM " + Table_Name2;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -179,24 +180,28 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
             do
             {
                 String pr_name=cursor.getString(0);
+                Log.d(TAG, "get_product: " + pr_name);
                 double lat=Double.parseDouble(cursor.getString(1));
                 double lng=Double.parseDouble(cursor.getString(2));
                 int price=Integer.parseInt(cursor.getString(3));
                 int days=Integer.parseInt(cursor.getString(4));
                 int avail=Integer.parseInt(cursor.getString(5));
                 String contact_name=cursor.getString(6);
+                Log.d(TAG, "get_product: contact name "+ contact_name);
                 int id=Integer.parseInt(cursor.getString(7));
                 byte [] image = cursor.getBlob(8);
 
 
-                if(product_id==id)
+                if(name.equals(pr_name))
                 {
                     found_product = new Product(pr_name,lat,lng,price,days,avail,contact_name,id,image);
+                    Log.d(TAG, "get_product: found" + name);
                 }
 
             }
             while (cursor.moveToNext());
         }
+        Log.d(TAG, "get_product: here " + found_product.getName());
         return found_product;
     }
     //return all users

@@ -1,6 +1,7 @@
 package com.example.shereen.dipolmafinalproject;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
 import static com.example.shereen.dipolmafinalproject.HomeActivity.products_lists;
 
@@ -24,6 +28,7 @@ import static com.example.shereen.dipolmafinalproject.HomeActivity.products_list
  * create an instance of this fragment.
  */
 public class ProductsFragment extends Fragment implements RecycleViewAdapter.ItemClickListener{
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -65,11 +70,19 @@ public class ProductsFragment extends Fragment implements RecycleViewAdapter.Ite
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    public String[] get_products_names()
+    {    String[] names = new String[products_lists.size()];
+        for(int i=0; i<products_lists.size();i++)
+        {
+           names[i]= products_lists.get(i).getName();
+        }
+        return names;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View v= inflater.inflate(R.layout.fragment_productsfragment, container, false);
         RecyclerView recyclerView = (RecyclerView)v.findViewById(R.id.rvNumbers);
         int numberOfColumns = 2;
@@ -78,10 +91,35 @@ public class ProductsFragment extends Fragment implements RecycleViewAdapter.Ite
        adapter.setClickListener( this);
         recyclerView.setAdapter(adapter);
 
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>
+                (getActivity(),android.R.layout.select_dialog_item,get_products_names());
+        //Getting the instance of AutoCompleteTextView
+        final AutoCompleteTextView actv= (AutoCompleteTextView)v.findViewById(R.id.autoCompleteTextView1);
+        actv.setThreshold(1);//will start working from first character
+        actv.setAdapter(adapter1);//setting the adapter data into the AutoCompleteTextView
+        actv.setTextColor(Color.RED);
+        Button search_button = (Button) v.findViewById(R.id.search_button);
+        search_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String search_item= String.valueOf(actv.getText());
+                sqlLiteHelper sqlLiteHelper= new sqlLiteHelper(getActivity());
+                Product product = sqlLiteHelper.get_product(search_item);
+
+                ProductDetailsFragment fragment_details=new ProductDetailsFragment(product);
+
+                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmenttranscation=fragmentManager.beginTransaction();
+                fragmenttranscation.replace(R.id.fragment,fragment_details);
+                fragmenttranscation.commit();
+
+            }
+        });
 
 
         return v;
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -104,18 +142,16 @@ public class ProductsFragment extends Fragment implements RecycleViewAdapter.Ite
 
     @Override
     public void onItemClick(View view, int position) {
+        sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(getActivity());
+        Product product=  sqlLiteHelper.get_product(products_lists.get(position).getName());
 
-
-        ProductDetailsFragment fragment_details=new ProductDetailsFragment(products_lists);
+        ProductDetailsFragment fragment_details=new ProductDetailsFragment(product);
 
         FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
         FragmentTransaction fragmenttranscation=fragmentManager.beginTransaction();
         fragmenttranscation.replace(R.id.fragment,fragment_details);
         fragmenttranscation.commit();
 
-        Bundle bundle=new Bundle();
-        bundle.putInt("position", position);
-        fragment_details.setArguments(bundle);
 
     }
 
