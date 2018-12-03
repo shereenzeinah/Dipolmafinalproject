@@ -66,7 +66,7 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db= this.getWritableDatabase();
         ContentValues values= new ContentValues();
-        Log.d(TAG, "insert_user: " + user.email);
+        Log.d(TAG, "insert_user: " + user.lat + " " + user.lng);
         values.put(name_key,user.name);
         values.put(phone_key,user.phone);
         values.put(lat_key,user.lat);
@@ -142,6 +142,7 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
     }
 
     //get a specific user data
+
     public User get_User(String user_email)
     {
         User found_user = null;
@@ -156,6 +157,7 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
                 String email=cursor.getString(2);
                 double lat=cursor.getDouble(3);
                 double lng=cursor.getDouble(4);
+                Log.d(TAG, "get_User: lat & lng " + lat + " " + lng);
                 String password=cursor.getString(5);
                 if(user_email.equals(email))
                 {

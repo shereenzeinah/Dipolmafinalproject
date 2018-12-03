@@ -2,6 +2,7 @@ package com.example.shereen.dipolmafinalproject;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -17,6 +18,10 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
+import static android.content.Context.MODE_PRIVATE;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,9 +32,12 @@ import android.widget.TextView;
  * create an instance of this fragment.
  */
 public class ProductDetailsFragment extends Fragment {
-    public final static String TAG = "TEST00";
+    public final static String TAG = "TEST001";
+    SharedPreferences sharedPreferences;
+    String user_details = "user_Details";
+    public  double user_lat,user_lng;
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER*
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -92,13 +100,16 @@ public class ProductDetailsFragment extends Fragment {
         TextView location = (TextView) v.findViewById(R.id.pd_productlocation);
         Button avaialable = (Button) v.findViewById(R.id.available);
         final Button rent = (Button) v.findViewById(R.id.rent);
-
+        TextView delivery = (TextView) v.findViewById(R.id.delivery);
 
         // set product information in product details page
         productname.setText(product_list_details_page.getName());
         productprice.setText(String.valueOf(product_list_details_page.getPrice()));
         secondprice.setText(String.valueOf(product_list_details_page.getPrice()));
         rentdays.setText(String.valueOf(product_list_details_page.getDays()));
+        double pr_lat,pr_lng;
+        pr_lat = product_list_details_page.getLat();
+        pr_lng = product_list_details_page.getLng();
 
         // convert product image from bytes to bitmap then set it
         Bitmap bmp = BitmapFactory.decodeByteArray(product_list_details_page.getImage(), 0, product_list_details_page.getImage().length);
@@ -106,9 +117,25 @@ public class ProductDetailsFragment extends Fragment {
 
         // set user information in product details page
         sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(getActivity());
-        Log.d(TAG, "onCreateView: user name" + product_list_details_page.getContact_name());
         User user=  sqlLiteHelper.get_User(product_list_details_page.getContact_name());
-        Log.d(TAG, "onCreateView: " + user);
+
+        //get my user location
+        sharedPreferences = getContext().getSharedPreferences(user_details,MODE_PRIVATE);
+        String email = sharedPreferences.getString("email", "");
+        User my_user=  sqlLiteHelper.get_User(email);
+        user_lat = my_user.getLat();
+        user_lng = my_user.getLng();
+
+        Log.d(TAG, "onCreateView: distance " +pr_lat+" "+ pr_lng+ " "+ user_lat+" "+user_lng);
+        double distance = CalculationByDistance(pr_lat,pr_lng,user_lat,user_lng);
+        if(distance>10)
+        {
+            delivery.setText("Out of your range("+distance+"Km away)");
+        }
+        else
+        {
+            delivery.setText("In your range!" + distance);
+        }
 
         ownwername.setText(user.getName());
         ownwerphone.setText(String.valueOf(user.getPhone()));
@@ -185,4 +212,29 @@ public class ProductDetailsFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+    public double CalculationByDistance(double pr_lat,double pr_lng, double user_lat,double user_lng) {
+        int Radius = 6371;// radius of earth in Km
+        double lat1 = pr_lat;
+        double lat2 = user_lat;
+        double lon1 = pr_lng;
+        double lon2 = user_lng;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1))
+                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
+                * Math.sin(dLon / 2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double valueResult = Radius * c;
+        double km = valueResult / 1;
+        DecimalFormat newFormat = new DecimalFormat("####");
+        int kmInDec = Integer.valueOf(newFormat.format(km));
+        double meter = valueResult % 1000;
+        int meterInDec = Integer.valueOf(newFormat.format(meter));
+        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
+                + " Meter   " + meterInDec);
+
+        return kmInDec;
+    }
+
 }

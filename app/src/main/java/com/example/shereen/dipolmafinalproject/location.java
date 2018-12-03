@@ -196,7 +196,6 @@ public class location extends FragmentActivity implements  OnMapReadyCallback,
     }
     public void addSharedPreference(String lat, String lng)
     {
-
         sharedPreferences = getSharedPreferences(sharedPrefName,MODE_PRIVATE);
         SharedPreferences.Editor editor= sharedPreferences.edit();
 
