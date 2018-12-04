@@ -112,7 +112,7 @@ public class ProductsFragment extends Fragment implements RecycleViewAdapter.Ite
 
         actv.setThreshold(1);//will start working from first character
         actv.setAdapter(adapter1);//setting the adapter data into the AutoCompleteTextView
-        actv.setTextColor(Color.RED);
+        actv.setTextColor(Color.WHITE);
         ImageButton search_button = (ImageButton) toolbar.findViewById(R.id.search_button);
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override

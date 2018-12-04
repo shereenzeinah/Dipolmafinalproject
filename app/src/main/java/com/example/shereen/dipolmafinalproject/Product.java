@@ -10,7 +10,11 @@ public class Product {
     int days,price,avail,id;
     public byte[] image;
 
-    public Product(String name,double lat,double lng, int price, int days, int avail, String contact_name, int id, byte[] image) {
+    public void setAvail(int avail) {
+        this.avail = avail;
+    }
+
+    public Product(String name, double lat, double lng, int price, int days, int avail, String contact_name, int id, byte[] image) {
         this.name = name;
         this.lat=lat;
         this.lng=lng;

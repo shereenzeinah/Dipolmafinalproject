@@ -51,7 +51,6 @@
             android:popupTheme="@color/white"
             android:theme="@style/Autocomplete"
             android:layout_weight="0.34">
-
             <requestFocus />
         </AutoCompleteTextView>
         <ImageButton

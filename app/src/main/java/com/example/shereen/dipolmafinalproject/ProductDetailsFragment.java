@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,8 +18,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.util.concurrent.TimeUnit;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.shereen.dipolmafinalproject.HomeActivity.searchbar;
@@ -38,6 +41,7 @@ public class ProductDetailsFragment extends Fragment {
     SharedPreferences sharedPreferences;
     String user_details = "user_Details";
     public  double user_lat,user_lng;
+    TextView productprice,rent_days_left;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER*
     private static final String ARG_PARAM1 = "param1";
@@ -91,9 +95,10 @@ public class ProductDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =inflater.inflate(R.layout.fragment_product_details, container, false);
+
         ImageView productimage = (ImageView) v.findViewById(R.id.product_detail_image);
         TextView productname = (TextView) v.findViewById(R.id.pd_productname);
-        TextView productprice = (TextView) v.findViewById(R.id.pd_price);
+        productprice = (TextView) v.findViewById(R.id.pd_price);
         TextView secondprice = (TextView) v.findViewById(R.id.pd_productprice);
         TextView rentdays = (TextView) v.findViewById(R.id.pd_rentdays);
         TextView ownwername = (TextView) v.findViewById(R.id.pd_ownername);
@@ -103,6 +108,7 @@ public class ProductDetailsFragment extends Fragment {
         Button avaialable = (Button) v.findViewById(R.id.available);
         final Button rent = (Button) v.findViewById(R.id.rent);
         TextView delivery = (TextView) v.findViewById(R.id.delivery);
+        rent_days_left = (TextView) v.findViewById(R.id.rentdaysleft);
 
         // set title
 
@@ -118,7 +124,6 @@ public class ProductDetailsFragment extends Fragment {
         double pr_lat,pr_lng;
         pr_lat = product_list_details_page.getLat();
         pr_lng = product_list_details_page.getLng();
-
         // convert product image from bytes to bitmap then set it
         Bitmap bmp = BitmapFactory.decodeByteArray(product_list_details_page.getImage(), 0, product_list_details_page.getImage().length);
         productimage.setImageBitmap(bmp);
@@ -152,14 +157,22 @@ public class ProductDetailsFragment extends Fragment {
         // set product is available is not
         int aval ;
         aval=product_list_details_page.getAvail();
+        Log.d(TAG, "onCreateView: avail " + aval);
         if(aval==1)
             {
                 avaialable.setText("available");
+                avaialable.setBackgroundColor(avaialable.getContext().getResources().getColor(R.color.logingreen));
+                //enable rent button
+                rent.setEnabled(true);
+
             }
         else
             {
             avaialable.setText(" Not available");
             avaialable.setBackgroundColor(avaialable.getContext().getResources().getColor(R.color.red));
+                //disable rent button
+                rent.setEnabled(false);
+
              }
 
         // pop up menu appear
@@ -177,6 +190,51 @@ public class ProductDetailsFragment extends Fragment {
                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                        @Override
                        public boolean onMenuItemClick(MenuItem item) {
+                           int number_of_renting_days = 0;
+                           String days = item.toString();
+                           Log.d(TAG, "onMenuItemClick: "+ days);
+                           if(days.equals("One Day"))
+                           {
+                               number_of_renting_days=1;
+                               product_list_details_page.setAvail(0);
+                           }
+                           else if (days.equals("Two Days"))
+                           {
+                               number_of_renting_days=2;
+                               product_list_details_page.setAvail(0);
+
+                           }
+                           else if(days.equals("Three Days"))
+                           {
+                               number_of_renting_days=3;
+                               product_list_details_page.setAvail(0);
+
+                           }
+                           else if(days.equals("Four Days"))
+                           {
+                               number_of_renting_days=4;
+                               product_list_details_page.setAvail(0);
+
+                           }
+                           else if (days.equals("Five Days"))
+                           {
+                               number_of_renting_days=5;
+                               product_list_details_page.setAvail(0);
+                           }
+                           else if(days.equals("Six Days"))
+                           {
+                               number_of_renting_days=6;
+                               Log.d(TAG, "onMenuItemClick: " +number_of_renting_days);
+                               product_list_details_page.setAvail(0);
+
+                           }
+                           else if (days.equals("Seven Days"))
+                           {
+                               number_of_renting_days=7;
+                               product_list_details_page.setAvail(0);
+
+                           }
+                           CountDownDayss(number_of_renting_days);
                            return false;
                        }
                    });
@@ -220,6 +278,58 @@ public class ProductDetailsFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    public void CountDownDays(int days)
+    {
+        //calculate total price for the user and show it in a toast
+        int total_price = days*product_list_details_page.getPrice();
+        productprice.setText(total_price);
+        Toast.makeText(getActivity(),"Your total sale is "+total_price ,Toast.LENGTH_SHORT).show();
+        // day to milliseconds.
+        long days_in_milli = TimeUnit.DAYS.toMillis(days);
+
+        Log.d(TAG, "CountDownDays: ");
+        new CountDownTimer(days_in_milli, 86400000) {
+            public void onTick(long millisUntilFinished) {
+                //here you can have your logic to set text to edittext
+                rent_days_left.setText("Remaining days:" + millisUntilFinished/86400000);
+                Log.d(TAG, "onTick: "+"seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                Log.d(TAG, "onFinish: done" );
+                rent_days_left.setText("");
+                product_list_details_page.setAvail(1);
+            }
+
+        }.start();
+    }
+    public void CountDownDayss(int days)
+    {
+        //calculate total price for the user and show it in a toast
+        Log.d(TAG, "CountDownDayss: number of days"+ days);
+        int total_price = days*product_list_details_page.getPrice();
+        productprice.setText(""+total_price);
+        Toast.makeText(getActivity(),"Your total sale is "+total_price ,Toast.LENGTH_SHORT).show();
+        // day to milliseconds.
+        //long days_in_milli = TimeUnit.DAYS.toMillis(days);
+        long days_in_milli= days*1000;
+        Log.d(TAG, "CountDownDays: " + days_in_milli);
+        new CountDownTimer(days_in_milli, 1000) {
+            public void onTick(long millisUntilFinished) {
+                //here you can have your logic to set text to edittext
+                rent_days_left.setText("Remaining days:" + millisUntilFinished/1000);
+                Log.d(TAG, "onTick: "+"seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                Log.d(TAG, "onFinish: done" );
+                rent_days_left.setText("");
+                product_list_details_page.setAvail(1);
+            }
+
+        }.start();
+    }
     public double CalculationByDistance(double pr_lat,double pr_lng, double user_lat,double user_lng) {
         int Radius = 6371;// radius of earth in Km
         double lat1 = pr_lat;
@@ -245,4 +355,18 @@ public class ProductDetailsFragment extends Fragment {
         return kmInDec;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
 }
