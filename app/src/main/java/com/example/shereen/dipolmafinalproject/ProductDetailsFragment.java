@@ -21,6 +21,8 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.example.shereen.dipolmafinalproject.HomeActivity.searchbar;
+import static com.example.shereen.dipolmafinalproject.HomeActivity.title;
 
 
 /**
@@ -44,7 +46,7 @@ public class ProductDetailsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-   public Product product_list_details_page ;
+    public Product product_list_details_page ;
     private OnFragmentInteractionListener mListener;
 
     public ProductDetailsFragment() {
@@ -101,6 +103,12 @@ public class ProductDetailsFragment extends Fragment {
         Button avaialable = (Button) v.findViewById(R.id.available);
         final Button rent = (Button) v.findViewById(R.id.rent);
         TextView delivery = (TextView) v.findViewById(R.id.delivery);
+
+        // set title
+
+        searchbar.setVisibility(View.INVISIBLE);
+        title.setVisibility(View.VISIBLE);
+        title.setText("Product details");
 
         // set product information in product details page
         productname.setText(product_list_details_page.getName());

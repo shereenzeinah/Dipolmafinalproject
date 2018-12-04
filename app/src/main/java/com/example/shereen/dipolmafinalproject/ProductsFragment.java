@@ -15,9 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
+
+import static com.example.shereen.dipolmafinalproject.HomeActivity.toolbar;
 
 //import static com.example.shereen.dipolmafinalproject.HomeActivity.products_lists;
 
@@ -103,14 +105,15 @@ public class ProductsFragment extends Fragment implements RecycleViewAdapter.Ite
         recyclerView.setAdapter(adapter);
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>
-                (getActivity(),android.R.layout.select_dialog_item,get_products_names());
+                (getActivity(),R.layout.autocompletetextview_adapter, R.id.tvHintCompletion,get_products_names());
 
         //Getting the instance of AutoCompleteTextView
-        final AutoCompleteTextView actv= (AutoCompleteTextView)v.findViewById(R.id.autoCompleteTextView1);
+        final AutoCompleteTextView actv= (AutoCompleteTextView)toolbar.findViewById(R.id.autoCompleteTextView1);
+
         actv.setThreshold(1);//will start working from first character
         actv.setAdapter(adapter1);//setting the adapter data into the AutoCompleteTextView
         actv.setTextColor(Color.RED);
-        Button search_button = (Button) v.findViewById(R.id.search_button);
+        ImageButton search_button = (ImageButton) toolbar.findViewById(R.id.search_button);
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

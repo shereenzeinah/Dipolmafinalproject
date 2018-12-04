@@ -11,10 +11,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,14 +27,16 @@ public class HomeActivity extends AppCompatActivity
     SharedPreferences sharedPreferences;
     String sharedPrefName = "Login";
     String user_details = "user_Details";
-
+    public static LinearLayout searchbar;
+    public static TextView title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
-         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        searchbar = (LinearLayout) findViewById(R.id.searchbar);
+        title= (TextView) findViewById(R.id.title);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -69,9 +71,11 @@ public class HomeActivity extends AppCompatActivity
                 fragmenttranscation.replace(R.id.fragment,fragment_user);
                 fragmenttranscation.commit();
                 // set title of actionbar
-                toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Profile</font>"));
-                 toolbar.setBackgroundColor(getResources().getColor(R.color.logingreen));
-                toolbar.setTitleMargin(180,0,0,0);
+
+                searchbar.setVisibility(View.INVISIBLE);
+                title.setVisibility(View.VISIBLE);
+                title.setText("Profile");
+
 
 
                 // close side menue
@@ -111,7 +115,7 @@ public class HomeActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
-        return true;
+        return false;
     }
 
     @Override
@@ -142,7 +146,9 @@ public class HomeActivity extends AppCompatActivity
             fragmenttranscation.replace(R.id.fragment,fragment_home);
             fragmenttranscation.commit();
            // set title of actionbar
-            toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Home</font>"));
+            searchbar.setVisibility(View.VISIBLE);
+            title.setVisibility(View.INVISIBLE);
+
 
         } else if (id == R.id.nav_settings) {
             FragmentManager fragmentmanager = getSupportFragmentManager();
@@ -151,7 +157,9 @@ public class HomeActivity extends AppCompatActivity
             fragmenttranscation.replace(R.id.fragment,fragment_setting);
             fragmenttranscation.commit();
             // set title of actionbar
-            toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Settings</font>"));
+            searchbar.setVisibility(View.INVISIBLE);
+            title.setVisibility(View.VISIBLE);
+            title.setText("Settings");
 
         } else if (id == R.id.nav_slideshow) {
 
