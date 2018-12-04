@@ -206,4 +206,5 @@ public class location extends FragmentActivity implements  OnMapReadyCallback,
 
 
     }
+
 }

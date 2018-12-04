@@ -13,16 +13,34 @@ import android.widget.Toast;
 public class SignUp extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     String sharedPrefName = "Location";
-    String user_Data = "user_Data";
+    String  user_Data = "user_Data";
     double user_lat,user_lng;
     public static final String TAG="TESTl";
-    String user_name,user_email,user_password;
-    int user_phone;
+    public static String user_name,user_email,user_password;
+     public static int user_phone;
+    public  EditText name , phone , email , password;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         getSharedPreference();
+        name = (EditText) findViewById(R.id.signname);
+        phone = (EditText) findViewById(R.id.signphone);
+        email = (EditText) findViewById(R.id.signemail);
+        password = (EditText) findViewById(R.id.signpassword);
+        Toast.makeText(this , ""+user_phone , Toast.LENGTH_SHORT).show();
+
+        if (user_name != null) {
+
+
+           name.setText(user_name);
+           email.setText(user_email);
+            password.setText(user_password);
+            phone.setText(String.valueOf(user_phone));
+
+                 }
+
         Button register = (Button) findViewById(R.id.registerbutton);
         final EditText address = (EditText) findViewById(R.id.signlocation);
         address.setText(user_lat+","+user_lng);
@@ -32,7 +50,7 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SignUp.this,location.class);
                 add_user_Data();
-                startActivity(intent);
+                 startActivity(intent);
 
             }
         });
@@ -45,20 +63,16 @@ public class SignUp extends AppCompatActivity {
         });
     }
 
+
+
     public void add_user_Data()
     {
 
-        EditText name = (EditText) findViewById(R.id.signname);
+
         user_name = name.getText().toString();
-
-        EditText phone = (EditText) findViewById(R.id.signphone);
         user_phone =Integer.parseInt(phone.getText().toString());
-
-        EditText email = (EditText) findViewById(R.id.signemail);
         user_email = email.getText().toString();
         Log.d(TAG, "save_user: " + user_email);
-
-        EditText password = (EditText) findViewById(R.id.signpassword);
         user_password = password.getText().toString();
 
         sharedPreferences = getSharedPreferences(user_Data, MODE_PRIVATE);
