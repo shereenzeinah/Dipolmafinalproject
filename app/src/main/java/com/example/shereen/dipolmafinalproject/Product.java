@@ -1,5 +1,7 @@
 package com.example.shereen.dipolmafinalproject;
 
+import android.util.Log;
+
 /**
  * Created by Shereen on 10/24/2018.
  */
@@ -7,10 +9,12 @@ package com.example.shereen.dipolmafinalproject;
 public class Product {
     String name,contact_name;
     double lat,lng;
-    int days,price,avail,id;
+    static int days,price,avail,id;
     public byte[] image;
+    public static String TAG="product";
 
     public void setAvail(int avail) {
+        Log.d(TAG, "setAvail: " + avail);
         this.avail = avail;
     }
 

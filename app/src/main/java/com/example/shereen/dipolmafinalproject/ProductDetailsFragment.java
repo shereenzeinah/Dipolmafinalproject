@@ -41,7 +41,11 @@ public class ProductDetailsFragment extends Fragment {
     SharedPreferences sharedPreferences;
     String user_details = "user_Details";
     public  double user_lat,user_lng;
+    static int number_of_renting_days = 0;
     TextView productprice,rent_days_left;
+    Button rent;
+    Button avaialable;
+    public static int aval ;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER*
     private static final String ARG_PARAM1 = "param1";
@@ -105,8 +109,8 @@ public class ProductDetailsFragment extends Fragment {
         TextView ownwerphone = (TextView) v.findViewById(R.id.pd_ownerpphone);
         TextView ownermail = (TextView) v.findViewById(R.id.pd_ownwermail);
         TextView location = (TextView) v.findViewById(R.id.pd_productlocation);
-        Button avaialable = (Button) v.findViewById(R.id.available);
-        final Button rent = (Button) v.findViewById(R.id.rent);
+        avaialable = (Button) v.findViewById(R.id.available);
+        rent = (Button) v.findViewById(R.id.rent);
         TextView delivery = (TextView) v.findViewById(R.id.delivery);
         rent_days_left = (TextView) v.findViewById(R.id.rentdaysleft);
 
@@ -118,7 +122,7 @@ public class ProductDetailsFragment extends Fragment {
 
         // set product information in product details page
         productname.setText(product_list_details_page.getName());
-        productprice.setText(String.valueOf(product_list_details_page.getPrice()));
+        //productprice.setText(String.valueOf(product_list_details_page.getPrice()));
         secondprice.setText(String.valueOf(product_list_details_page.getPrice()));
         rentdays.setText(String.valueOf(product_list_details_page.getDays()));
         double pr_lat,pr_lng;
@@ -155,25 +159,11 @@ public class ProductDetailsFragment extends Fragment {
         ownermail.setText(user.getEmail());
 
         // set product is available is not
-        int aval ;
+
         aval=product_list_details_page.getAvail();
         Log.d(TAG, "onCreateView: avail " + aval);
-        if(aval==1)
-            {
-                avaialable.setText("available");
-                avaialable.setBackgroundColor(avaialable.getContext().getResources().getColor(R.color.logingreen));
-                //enable rent button
-                rent.setEnabled(true);
-
-            }
-        else
-            {
-            avaialable.setText(" Not available");
-            avaialable.setBackgroundColor(avaialable.getContext().getResources().getColor(R.color.red));
-                //disable rent button
-                rent.setEnabled(false);
-
-             }
+        //Check on availbilty
+        CheckAvailbility();
 
         // pop up menu appear
            rent.setOnClickListener(new View.OnClickListener() {
@@ -190,50 +180,45 @@ public class ProductDetailsFragment extends Fragment {
                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                        @Override
                        public boolean onMenuItemClick(MenuItem item) {
-                           int number_of_renting_days = 0;
+
                            String days = item.toString();
                            Log.d(TAG, "onMenuItemClick: "+ days);
                            if(days.equals("One Day"))
                            {
                                number_of_renting_days=1;
-                               product_list_details_page.setAvail(0);
                            }
                            else if (days.equals("Two Days"))
                            {
                                number_of_renting_days=2;
-                               product_list_details_page.setAvail(0);
 
                            }
                            else if(days.equals("Three Days"))
                            {
                                number_of_renting_days=3;
-                               product_list_details_page.setAvail(0);
 
                            }
                            else if(days.equals("Four Days"))
                            {
                                number_of_renting_days=4;
-                               product_list_details_page.setAvail(0);
 
                            }
                            else if (days.equals("Five Days"))
                            {
                                number_of_renting_days=5;
-                               product_list_details_page.setAvail(0);
                            }
                            else if(days.equals("Six Days"))
                            {
                                number_of_renting_days=6;
                                Log.d(TAG, "onMenuItemClick: " +number_of_renting_days);
-                               product_list_details_page.setAvail(0);
 
                            }
                            else if (days.equals("Seven Days"))
                            {
                                number_of_renting_days=7;
                                product_list_details_page.setAvail(0);
-
                            }
+
+                           Log.d(TAG, "onMenuItemClick: "+ product_list_details_page.getAvail());
                            CountDownDayss(number_of_renting_days);
                            return false;
                        }
@@ -241,8 +226,27 @@ public class ProductDetailsFragment extends Fragment {
                    popup.show();
                }
            });
-
         return v;
+    }
+    public void CheckAvailbility()
+    {
+        Log.d(TAG, "CheckAvailbility: " + aval);
+        aval= product_list_details_page.getAvail();
+        if(aval==1)
+        {
+            avaialable.setText("available");
+            avaialable.setBackgroundColor(avaialable.getContext().getResources().getColor(R.color.logingreen));
+            //enable rent button
+            rent.setEnabled(true);
+
+        }
+        else
+        {
+            avaialable.setText(" Not available");
+            avaialable.setBackgroundColor(avaialable.getContext().getResources().getColor(R.color.red));
+            //disable rent button
+            rent.setEnabled(false);
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -278,7 +282,11 @@ public class ProductDetailsFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+    public void UpdateTimer()
+    {
+        //Update textview of number of remaining days
 
+    }
     public void CountDownDays(int days)
     {
         //calculate total price for the user and show it in a toast
@@ -306,10 +314,13 @@ public class ProductDetailsFragment extends Fragment {
     }
     public void CountDownDayss(int days)
     {
+        Log.d(TAG, "CountDownDayss: avail"+product_list_details_page.getAvail());
+        //Check on availbilty
+        CheckAvailbility();
         //calculate total price for the user and show it in a toast
         Log.d(TAG, "CountDownDayss: number of days"+ days);
         int total_price = days*product_list_details_page.getPrice();
-        productprice.setText(""+total_price);
+        //productprice.setText(""+total_price);
         Toast.makeText(getActivity(),"Your total sale is "+total_price ,Toast.LENGTH_SHORT).show();
         // day to milliseconds.
         //long days_in_milli = TimeUnit.DAYS.toMillis(days);
@@ -324,8 +335,11 @@ public class ProductDetailsFragment extends Fragment {
 
             public void onFinish() {
                 Log.d(TAG, "onFinish: done" );
-                rent_days_left.setText("");
+                //rent_days_left.setText("");
                 product_list_details_page.setAvail(1);
+                //Check on availbilty
+                rent_days_left.setText("");
+                CheckAvailbility();
             }
 
         }.start();
