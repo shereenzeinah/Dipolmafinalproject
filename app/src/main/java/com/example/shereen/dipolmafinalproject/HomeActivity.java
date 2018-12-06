@@ -68,7 +68,7 @@ public class HomeActivity extends AppCompatActivity
                 FragmentManager fragmentmanager = getSupportFragmentManager();
                 FragmentTransaction fragmenttranscation = fragmentmanager.beginTransaction().addToBackStack(null);
                 UserAccountFragment fragment_user = new UserAccountFragment();
-                fragmenttranscation.replace(R.id.fragment,fragment_user);
+                fragmenttranscation.replace(R.id.fragment,fragment_user,"UserAccountFragment");
                 fragmenttranscation.commit();
                 // set title of actionbar
 

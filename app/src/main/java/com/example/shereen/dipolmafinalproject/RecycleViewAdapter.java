@@ -80,6 +80,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter <RecycleViewAdapter
     Product getItem(int id) {
         return product_list.get(id);
     }
+
     void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }

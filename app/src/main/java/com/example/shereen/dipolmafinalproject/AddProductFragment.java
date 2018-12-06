@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +31,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
-import static com.example.shereen.dipolmafinalproject.HomeActivity.toolbar;
+import static com.example.shereen.dipolmafinalproject.RecycleAdapter.flag;
 
 
 /**
@@ -60,6 +59,10 @@ public class AddProductFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+
+     public EditText product_name , product_price ;
 
     private OnFragmentInteractionListener mListener;
     public static Context getContextOfApplication()
@@ -95,9 +98,18 @@ public class AddProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_add_product, container, false);
-        toolbar.setTitle(Html.fromHtml("<font color='#ffffff'>Add Product</font>"));
-        toolbar.setBackgroundColor(getActivity().getResources().getColor(R.color.logingreen));
-        toolbar.setTitleMargin(140,0,0,0);
+
+        product_name = (EditText) view.findViewById(R.id.addproduct_productname);
+        product_price = (EditText) view.findViewById(R.id.addproduct_productprice);
+        add_photo= (CircleImageView) view.findViewById(R.id.setproductimage);
+
+        // determine if this edit product or add product layout
+        if(flag==1) {
+
+
+        }
+        else{}
+
         Button add = (Button) view.findViewById(R.id.addprouctform);
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +120,7 @@ public class AddProductFragment extends Fragment {
             }
         });
 
-        add_photo= (CircleImageView) view.findViewById(R.id.setproductimage);
+
         add_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,8 +149,9 @@ public class AddProductFragment extends Fragment {
     public void add_product(View v)
     {
         EditText product_name = (EditText) v.findViewById(R.id.addproduct_productname);
-        String pr_name = product_name.getText().toString();
         EditText product_price = (EditText) v.findViewById(R.id.addproduct_productprice);
+        String pr_name = product_name.getText().toString();
+
         int pr_price = Integer.parseInt(product_price.getText().toString());
 
 
