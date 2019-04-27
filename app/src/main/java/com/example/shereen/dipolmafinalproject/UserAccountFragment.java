@@ -19,8 +19,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.shereen.dipolmafinalproject.HomeActivity.products_lists;
+import static com.example.shereen.dipolmafinalproject.HomeActivity.user_Email;
 import static com.example.shereen.dipolmafinalproject.RecycleAdapter.products;
 
 
@@ -35,6 +38,8 @@ import static com.example.shereen.dipolmafinalproject.RecycleAdapter.products;
 public class UserAccountFragment extends Fragment  implements RecycleAdapter.ItemClickListener {
     SharedPreferences sharedPreferences;
     String user_details = "user_Details";
+    public ArrayList<Product> myProducts_lists;
+
 
     static String TAG="TEST3";
     // TODO: Rename parameter arguments, choose names that match
@@ -87,8 +92,13 @@ public class UserAccountFragment extends Fragment  implements RecycleAdapter.Ite
         RecyclerView rec = (RecyclerView) v.findViewById(R.id.accountrecycler);
         int numberOfColumns = 1;
         rec.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns));
+        myProducts_lists = new ArrayList<>();
+
+        sqlLiteHelper sql = new sqlLiteHelper(getActivity());
+        myProducts_lists=sql.get_users_products(user_Email);
+
         RecycleAdapter recadapter = new RecycleAdapter(products_lists , getActivity());
-        recadapter.setClickListener( this);
+        recadapter.setClickListener(this);
         rec.setAdapter(recadapter);
         recadapter.notifyDataSetChanged();
 
@@ -256,4 +266,5 @@ public class UserAccountFragment extends Fragment  implements RecycleAdapter.Ite
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

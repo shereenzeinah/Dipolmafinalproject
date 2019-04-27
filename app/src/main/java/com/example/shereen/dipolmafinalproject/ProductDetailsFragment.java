@@ -43,9 +43,10 @@ public class ProductDetailsFragment extends Fragment {
     public  double user_lat,user_lng;
     static int number_of_renting_days = 0;
     TextView productprice,rent_days_left;
+    int n_days;
     Button rent;
     Button avaialable;
-    public static int aval ;
+    public int aval ;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER*
     private static final String ARG_PARAM1 = "param1";
@@ -62,9 +63,10 @@ public class ProductDetailsFragment extends Fragment {
     }
 
     @SuppressLint("ValidFragment")
-    public ProductDetailsFragment(Product products) {
+    public ProductDetailsFragment(Product product) {
         // Required empty public constructor
-        this.product_list_details_page=products;
+        this.product_list_details_page=product;
+
     }
 
     /**
@@ -104,7 +106,6 @@ public class ProductDetailsFragment extends Fragment {
         TextView productname = (TextView) v.findViewById(R.id.pd_productname);
         productprice = (TextView) v.findViewById(R.id.pd_price);
         TextView secondprice = (TextView) v.findViewById(R.id.pd_productprice);
-        TextView rentdays = (TextView) v.findViewById(R.id.pd_rentdays);
         TextView ownwername = (TextView) v.findViewById(R.id.pd_ownername);
         TextView ownwerphone = (TextView) v.findViewById(R.id.pd_ownerpphone);
         TextView ownermail = (TextView) v.findViewById(R.id.pd_ownwermail);
@@ -115,23 +116,21 @@ public class ProductDetailsFragment extends Fragment {
         rent_days_left = (TextView) v.findViewById(R.id.rentdaysleft);
 
         // set title
-
         searchbar.setVisibility(View.INVISIBLE);
         title.setVisibility(View.VISIBLE);
         title.setText("Product details");
 
         // set product information in product details page
+
         productname.setText(product_list_details_page.getName());
         //productprice.setText(String.valueOf(product_list_details_page.getPrice()));
         secondprice.setText(String.valueOf(product_list_details_page.getPrice()));
-        rentdays.setText(String.valueOf(product_list_details_page.getDays()));
         double pr_lat,pr_lng;
         pr_lat = product_list_details_page.getLat();
         pr_lng = product_list_details_page.getLng();
         // convert product image from bytes to bitmap then set it
         Bitmap bmp = BitmapFactory.decodeByteArray(product_list_details_page.getImage(), 0, product_list_details_page.getImage().length);
         productimage.setImageBitmap(bmp);
-
         // set user information in product details page
         sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(getActivity());
         User user=  sqlLiteHelper.get_User(product_list_details_page.getContact_name());
@@ -214,10 +213,10 @@ public class ProductDetailsFragment extends Fragment {
                            }
                            else if (days.equals("Seven Days"))
                            {
-                               number_of_renting_days=7;
-                               product_list_details_page.setAvail(0);
-                           }
+                               number_of_renting_days=15;
 
+                           }
+                           EditProductAvailbility(0);
                            Log.d(TAG, "onMenuItemClick: "+ product_list_details_page.getAvail());
                            CountDownDayss(number_of_renting_days);
                            return false;
@@ -230,8 +229,8 @@ public class ProductDetailsFragment extends Fragment {
     }
     public void CheckAvailbility()
     {
-        Log.d(TAG, "CheckAvailbility: " + aval);
         aval= product_list_details_page.getAvail();
+        Log.d(TAG, "CheckAvailbility: " + aval);
         if(aval==1)
         {
             avaialable.setText("available");
@@ -247,6 +246,34 @@ public class ProductDetailsFragment extends Fragment {
             //disable rent button
             rent.setEnabled(false);
         }
+    }
+    public void EditProductAvailbility(int avail)
+    {
+        sqlLiteHelper helper = new sqlLiteHelper(getContext());
+        helper.edit_product(new Product(product_list_details_page.getName(),
+                product_list_details_page.getLat(),
+                product_list_details_page.getLng(),
+                product_list_details_page.getPrice(),
+                product_list_details_page.getDays(),
+                avail,
+                product_list_details_page.getContact_name(),
+                product_list_details_page.getId(),
+                product_list_details_page.getImage()),
+                product_list_details_page.getId());
+    }
+    public void EditProductNumberOfDays(int days)
+    {
+        sqlLiteHelper helper = new sqlLiteHelper(getContext());
+        helper.edit_product(new Product(product_list_details_page.getName(),
+                        product_list_details_page.getLat(),
+                        product_list_details_page.getLng(),
+                        product_list_details_page.getPrice(),
+                        days,
+                        product_list_details_page.getAvail(),
+                        product_list_details_page.getContact_name(),
+                        product_list_details_page.getId(),
+                        product_list_details_page.getImage()),
+                product_list_details_page.getId());
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -307,13 +334,15 @@ public class ProductDetailsFragment extends Fragment {
             public void onFinish() {
                 Log.d(TAG, "onFinish: done" );
                 rent_days_left.setText("");
-                product_list_details_page.setAvail(1);
+                EditProductAvailbility(1);
             }
 
         }.start();
     }
     public void CountDownDayss(int days)
     {
+        n_days=days;
+        EditProductNumberOfDays(n_days);
         Log.d(TAG, "CountDownDayss: avail"+product_list_details_page.getAvail());
         //Check on availbilty
         CheckAvailbility();
@@ -329,14 +358,15 @@ public class ProductDetailsFragment extends Fragment {
         new CountDownTimer(days_in_milli, 1000) {
             public void onTick(long millisUntilFinished) {
                 //here you can have your logic to set text to edittext
-                rent_days_left.setText("Remaining days:" + millisUntilFinished/1000);
+                n_days=n_days-1;
+                EditProductNumberOfDays(n_days);
+                rent_days_left.setText("Remaining days:" + product_list_details_page.getDays());
                 Log.d(TAG, "onTick: "+"seconds remaining: " + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
                 Log.d(TAG, "onFinish: done" );
-                //rent_days_left.setText("");
-                product_list_details_page.setAvail(1);
+                EditProductAvailbility(1);
                 //Check on availbilty
                 rent_days_left.setText("");
                 CheckAvailbility();

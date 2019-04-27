@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    public static String Tag="Check product";
     public  static ArrayList<Product> products_lists;
     public static Toolbar toolbar;
     SharedPreferences sharedPreferences;
@@ -29,6 +30,7 @@ public class HomeActivity extends AppCompatActivity
     String user_details = "user_Details";
     public static LinearLayout searchbar;
     public static TextView title;
+    public static String user_Email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +40,6 @@ public class HomeActivity extends AppCompatActivity
         title= (TextView) findViewById(R.id.title);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -52,10 +52,10 @@ public class HomeActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
 
         sharedPreferences = getSharedPreferences(user_details,MODE_PRIVATE);
-        String email = sharedPreferences.getString("email", "");
+        user_Email = sharedPreferences.getString("email", "");
         TextView username_profile = (TextView) headerView.findViewById(R.id.usernameaccount);
         sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(HomeActivity.this);
-        User user = sqlLiteHelper.get_User(email);
+        User user = sqlLiteHelper.get_User(user_Email);
         String username = user.name;
         username_profile.setText(username);
 
@@ -81,8 +81,6 @@ public class HomeActivity extends AppCompatActivity
                 // close side menue
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
-
-
             }
         });
 
@@ -91,6 +89,14 @@ public class HomeActivity extends AppCompatActivity
 
         sqlLiteHelper sql = new sqlLiteHelper(HomeActivity.this);
         products_lists=sql.get_Products_Data();
+        Log.d(Tag, "here ");
+
+        for(int i=0;i<products_lists.size();i++)
+        {
+
+            Log.d(Tag, "onRequestPermissionsResult: " + products_lists.get(i).getName());
+
+        }
 
 
 // open productss fragment by default
@@ -172,6 +178,7 @@ public class HomeActivity extends AppCompatActivity
             editor.putInt("check", 0);
             editor.commit();
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
 
         } else if (id == R.id.nav_share) {
@@ -184,4 +191,5 @@ public class HomeActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

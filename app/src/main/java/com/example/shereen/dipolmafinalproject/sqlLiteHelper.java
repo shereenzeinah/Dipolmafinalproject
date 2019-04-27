@@ -97,7 +97,7 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
 
 
         db.insert(Table_Name2,null,values);
-        // db.close();
+        db.close();
     }
 
     //Function to delete product
@@ -109,7 +109,7 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
 
 
     //Function to edit product
-    public void edit_product(Product product)
+    public void edit_product(Product product,int id)
     {
         SQLiteDatabase db= this.getWritableDatabase();
         ContentValues values= new ContentValues();
@@ -122,7 +122,7 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
         values.put(product_contact,product.contact_name);
         values.put(product_id,product.id);
         values.put(imagepath_key,product.image);
-        db.update(Table_Name2, values, product_id+" = "+product.id, null);
+        db.update(Table_Name2, values, product_id+" = "+ id, null);
     }
 
     //Function to edit user
@@ -169,7 +169,7 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
         }
         return found_user;
     }
-    //get a specific user data
+    //search products based on id
     public Product get_product(int p_id)
     {
         Product found_product = null;
@@ -201,7 +201,41 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
             }
             while (cursor.moveToNext());
         }
+
         return found_product;
+    }
+    //get products owned by a specific user
+    public ArrayList<Product> get_users_products(String email)
+    {
+        ArrayList<Product> list = new ArrayList<Product>();
+        String query= "SELECT * FROM " + Table_Name2;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        if(cursor.moveToFirst())
+        {
+            do
+            {
+                String pr_name=cursor.getString(0);
+                Log.d(TAG, "get_product: " + pr_name);
+                double lat=Double.parseDouble(cursor.getString(1));
+                double lng=Double.parseDouble(cursor.getString(2));
+                int price=Integer.parseInt(cursor.getString(3));
+                int days=Integer.parseInt(cursor.getString(4));
+                int avail=Integer.parseInt(cursor.getString(5));
+                String contact_name=cursor.getString(6);
+                Log.d(TAG, "get_product: contact name "+ contact_name);
+                int id=Integer.parseInt(cursor.getString(7));
+                byte [] image = cursor.getBlob(8);
+
+                if(email.equals(contact_name))
+                {
+                    list.add(new Product(pr_name,lat,lng,price,days,avail,contact_name,id,image));
+                }
+
+            }
+            while (cursor.moveToNext());
+        }
+        return list;
     }
     //return all users
     public ArrayList<User> get_Users_Data()
@@ -256,6 +290,7 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
         }
         return list;
     }
+    //returns products with matching name
     public ArrayList<Product> get_Products_Data_search(String name)
     {
         ArrayList<Product> list = new ArrayList<Product>();

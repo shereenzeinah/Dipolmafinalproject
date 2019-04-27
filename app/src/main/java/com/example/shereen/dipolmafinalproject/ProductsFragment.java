@@ -34,6 +34,7 @@ import static com.example.shereen.dipolmafinalproject.HomeActivity.toolbar;
  */
 public class ProductsFragment extends Fragment implements RecycleViewAdapter.ItemClickListener{
     public  ArrayList<Product> products_lists;
+    public static String TAG="TEST123";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -157,7 +158,6 @@ public class ProductsFragment extends Fragment implements RecycleViewAdapter.Ite
     public void onItemClick(View view, int position) {
         sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(getActivity());
         Product product=  sqlLiteHelper.get_product(products_lists.get(position).getId());
-
         ProductDetailsFragment fragment_details=new ProductDetailsFragment(product);
 
         FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
