@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,11 +19,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.shereen.dipolmafinalproject.HomeActivity.products_lists;
 import static com.example.shereen.dipolmafinalproject.RecycleAdapter.products;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -138,6 +137,7 @@ public class UserAccountFragment extends Fragment  implements RecycleAdapter.Ite
         return  v ;
     }
 
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -232,8 +232,17 @@ public class UserAccountFragment extends Fragment  implements RecycleAdapter.Ite
                 final sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(v.getContext());
                 final Product product=  sqlLiteHelper.get_product(products.get(position).getId());
                 sqlLiteHelper.delete_product(product);
+                Log.d(TAG, "delete hh ");
                 dialog.dismiss();
-               // products_lists.remove(position);
+                // de mafrrod tb2a products
+                products=sqlLiteHelper.get_product(products.get(position).getId());
+
+                FragmentManager fragmentmanager =getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmenttranscation = fragmentmanager.beginTransaction().addToBackStack(null);
+                UserAccountFragment fragment_user = new UserAccountFragment();
+                fragmenttranscation.replace(R.id.fragment,fragment_user,"UserAccountFragment");
+                fragmenttranscation.commit();
+                // products_lists.remove(position);
 
 
             }

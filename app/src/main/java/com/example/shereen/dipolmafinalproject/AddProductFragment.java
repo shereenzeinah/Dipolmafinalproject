@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
+import static com.example.shereen.dipolmafinalproject.HomeActivity.products_lists;
+import static com.example.shereen.dipolmafinalproject.HomeActivity.searchbar;
+import static com.example.shereen.dipolmafinalproject.HomeActivity.title;
 import static com.example.shereen.dipolmafinalproject.RecycleAdapter.flag;
 
 
@@ -165,7 +170,23 @@ public class AddProductFragment extends Fragment {
         Product product = new Product( pr_name, user.lat,user.lng,pr_price, 0, 1 ,user.email, random.nextInt()/1000 , imageViewToByte(add_photo));
         sqlLiteHelper.insert_product(product);
 
+        // mafrood de tb2a products msh products list lma nzbtha han3mlha
+        products_lists=sqlLiteHelper.get_Products_Data();
+
+
+        FragmentManager fragmentmanager =getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmenttranscation = fragmentmanager.beginTransaction().addToBackStack(null);
+        UserAccountFragment fragment_user = new UserAccountFragment();
+        fragmenttranscation.replace(R.id.fragment,fragment_user,"UserAccountFragment");
+        fragmenttranscation.commit();
+        // set title of actionbar
+
+        searchbar.setVisibility(View.INVISIBLE);
+        title.setVisibility(View.VISIBLE);
+        title.setText("Profile");
+
     }
+
     public byte[] imageViewToByte(ImageView image) {
         Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -209,6 +230,7 @@ public class AddProductFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+
 
         super.onActivityResult(requestCode, resultCode, data);
     }

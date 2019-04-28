@@ -105,6 +105,7 @@ public class sqlLiteHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db= this.getWritableDatabase();
         db.delete(Table_Name2, product_id+" = "+product.id, null);
+
     }
 
 

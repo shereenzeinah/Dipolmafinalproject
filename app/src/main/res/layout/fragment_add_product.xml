@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,6 +7,13 @@
     android:weightSum="4"
     android:background="@color/white"
     tools:context="com.example.shereen.dipolmafinalproject.AddProductFragment">
+/>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
    <TextView
        android:layout_marginTop="20dp"
@@ -86,7 +93,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginTop="70dp"
+
         android:background="@color/orange"
         android:text="add product"
         android:textColor="@color/white"
@@ -94,3 +101,4 @@
         />
 
 </LinearLayout>
+</ScrollView>

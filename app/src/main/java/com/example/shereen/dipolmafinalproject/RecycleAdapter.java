@@ -74,6 +74,9 @@ public  class SecondRecyclerViewHolder extends RecyclerView.ViewHolder  implemen
         option.setOnClickListener(this);
 
     }
+
+
+
     @Override
     public void onClick(final View v) {
         if (mClickListener != null) mClickListener.onItemClick(v, getAdapterPosition());
