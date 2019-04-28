@@ -213,7 +213,7 @@ public class ProductDetailsFragment extends Fragment {
                            }
                            else if (days.equals("Seven Days"))
                            {
-                               number_of_renting_days=15;
+                               number_of_renting_days=7;
 
                            }
                            EditProductAvailbility(0);
