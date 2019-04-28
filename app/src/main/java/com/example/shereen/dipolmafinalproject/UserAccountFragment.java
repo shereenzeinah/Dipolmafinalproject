@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,9 +18,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.shereen.dipolmafinalproject.HomeActivity.products_lists;
+import static com.example.shereen.dipolmafinalproject.HomeActivity.user_Email;
 import static com.example.shereen.dipolmafinalproject.RecycleAdapter.products;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +38,8 @@ import static com.example.shereen.dipolmafinalproject.RecycleAdapter.products;
 public class UserAccountFragment extends Fragment  implements RecycleAdapter.ItemClickListener {
     SharedPreferences sharedPreferences;
     String user_details = "user_Details";
+    public ArrayList<Product> myProducts_lists;
+
 
     static String TAG="TEST3";
     // TODO: Rename parameter arguments, choose names that match
@@ -86,12 +92,18 @@ public class UserAccountFragment extends Fragment  implements RecycleAdapter.Ite
         RecyclerView rec = (RecyclerView) v.findViewById(R.id.accountrecycler);
         int numberOfColumns = 1;
         rec.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns));
-        RecycleAdapter recadapter = new RecycleAdapter(products_lists , getActivity());
-        recadapter.setClickListener( this);
+        myProducts_lists = new ArrayList<>();
+
+        sqlLiteHelper sql = new sqlLiteHelper(getActivity());
+        myProducts_lists=sql.get_users_products(user_Email);
+        products_lists=sql.get_Products_Data();
+
+        RecycleAdapter recadapter = new RecycleAdapter(myProducts_lists , getActivity());
+        recadapter.setClickListener(this);
         rec.setAdapter(recadapter);
         recadapter.notifyDataSetChanged();
 
-     //   //add product button
+        //   //add product button
         Button add_product = (Button) v.findViewById(R.id.addproduct);
         add_product.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +148,6 @@ public class UserAccountFragment extends Fragment  implements RecycleAdapter.Ite
 
         return  v ;
     }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -184,7 +195,6 @@ public class UserAccountFragment extends Fragment  implements RecycleAdapter.Ite
                     } else if (selected_item.equals("Delete")) {
 
                         delete_product(position,v);
-
                        /* Fragment frg = null;
                         frg = getFragmentManager().findFragmentByTag("UserAccountFragment");
                         Toast.makeText(getContext(),""+frg.getTag(),Toast.LENGTH_SHORT).show();
@@ -206,8 +216,6 @@ public class UserAccountFragment extends Fragment  implements RecycleAdapter.Ite
 
 
     public void delete_product(final int position , View v) {
-
-
 
         final Dialog dialog = new Dialog(v.getContext());
         dialog.setContentView(R.layout.activity_dialoug);
@@ -232,17 +240,14 @@ public class UserAccountFragment extends Fragment  implements RecycleAdapter.Ite
                 final sqlLiteHelper sqlLiteHelper = new sqlLiteHelper(v.getContext());
                 final Product product=  sqlLiteHelper.get_product(products.get(position).getId());
                 sqlLiteHelper.delete_product(product);
-                Log.d(TAG, "delete hh ");
                 dialog.dismiss();
-                // de mafrrod tb2a products
-                products=sqlLiteHelper.get_product(products.get(position).getId());
-
+                sqlLiteHelper sql = new sqlLiteHelper(getActivity());
+                myProducts_lists=sql.get_users_products(user_Email);
                 FragmentManager fragmentmanager =getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmenttranscation = fragmentmanager.beginTransaction().addToBackStack(null);
                 UserAccountFragment fragment_user = new UserAccountFragment();
                 fragmenttranscation.replace(R.id.fragment,fragment_user,"UserAccountFragment");
                 fragmenttranscation.commit();
-                // products_lists.remove(position);
 
 
             }
@@ -265,4 +270,5 @@ public class UserAccountFragment extends Fragment  implements RecycleAdapter.Ite
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

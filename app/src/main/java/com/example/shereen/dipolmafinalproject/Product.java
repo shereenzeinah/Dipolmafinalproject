@@ -35,7 +35,7 @@ public class Product {
     }
 
     public String getName() {
-        Log.d(TAG, "product is in sql+ " + this.getName());
+
 
         return name;
     }
