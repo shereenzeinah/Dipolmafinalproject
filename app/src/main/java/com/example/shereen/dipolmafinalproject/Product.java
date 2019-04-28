@@ -18,6 +18,10 @@ public class Product {
         this.avail = avail;
     }
 
+    public void setDays(int days) {
+        Product.days = days;
+    }
+
     public Product(String name, double lat, double lng, int price, int days, int avail, String contact_name, int id, byte[] image) {
         this.name = name;
         this.lat=lat;
@@ -28,10 +32,11 @@ public class Product {
         this.contact_name = contact_name;
         this.id=id;
         this.image=image;
-
     }
 
     public String getName() {
+        Log.d(TAG, "product is in sql+ " + this.getName());
+
         return name;
     }
 

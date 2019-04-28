@@ -88,6 +88,8 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Password and username not saved", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                 startActivity(intent);
             }
         });
@@ -106,6 +108,8 @@ public class LoginActivity extends AppCompatActivity {
                 add_user_Details();
 
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                 startActivity(intent);
             }
 
